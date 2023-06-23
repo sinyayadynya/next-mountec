@@ -1,4 +1,4 @@
-import React from "react";
+import { createElement } from "react";
 
 interface DrupalMetatag {
   data: {
@@ -9,7 +9,7 @@ interface DrupalMetatag {
 
 export function Metatag({ data }: DrupalMetatag): JSX.Element {
   const metatags = data.map((metatag, i) => {
-    return React.createElement(metatag.tag, { key: i, ...metatag.attributes });
+    return createElement(metatag.tag, { key: i, ...metatag.attributes });
   });
 
   return <>{metatags}</>;
