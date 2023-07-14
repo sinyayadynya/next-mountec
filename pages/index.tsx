@@ -3,7 +3,7 @@ import { GetStaticPropsResult } from "next"
 import { DrupalNode } from "next-drupal"
 
 import { drupal } from "lib/drupal"
-import { Layout } from "components/layout"
+import { RootLayout } from "components/RootLayout"
 import { NodeArticleTeaser } from "components/node--article--teaser"
 
 interface IndexPageProps {
@@ -12,16 +12,18 @@ interface IndexPageProps {
 
 export default function IndexPage({ nodes }: IndexPageProps) {
   return (
-    <Layout>
+    <RootLayout>
       <Head>
-        <title>Next.js for Drupal</title>
+        <title>Mountec Corp</title>
         <meta
           name="description"
           content="A Next.js site powered by a Drupal backend."
         />
       </Head>
-      <div>
-        <h1 className="mb-10 text-6xl font-black">Latest Articles.</h1>
+      <div className='mx-auto max-w-7xl px-6 lg:px-8 mt-24 sm:mt-32 lg:mt-40'>
+        <h1 className='mt-6 block max-w-5xl font-display text-5xl font-medium tracking-tight text-neutral-950 [text-wrap:balance] sm:text-6xl'>
+            Latest Articles.
+        </h1>
         {nodes?.length ? (
           nodes.map((node) => (
             <div key={node.id}>
@@ -33,7 +35,7 @@ export default function IndexPage({ nodes }: IndexPageProps) {
           <p className="py-4">No nodes found</p>
         )}
       </div>
-    </Layout>
+    </RootLayout>
   )
 }
 

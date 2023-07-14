@@ -8,8 +8,10 @@ interface NodeOrganizationProps {
 
 export function NodeOrganization({ node, ...props }: NodeOrganizationProps) {
   return (
-    <article {...props}>
-      <h1 className="mb-4 text-6xl">{node.title}</h1>
+    <article className='mx-auto max-w-7xl px-6 lg:px-8 mt-24 sm:mt-32 lg:mt-40' {...props}>
+        <h1 className='mt-6 block max-w-5xl font-display text-5xl font-medium tracking-tight text-neutral-950 [text-wrap:balance] sm:text-6xl'>
+        {node.title}
+        </h1>
 
       <section>
         <h2 className="mb-2 text-4xl">General information</h2>

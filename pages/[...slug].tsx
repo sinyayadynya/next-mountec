@@ -2,28 +2,42 @@ import * as React from "react"
 import { GetStaticPathsResult, GetStaticPropsResult } from "next"
 import Head from "next/head"
 import { DrupalNode } from "next-drupal"
+// import { DrupalMenuLinkContent } from 'next-drupal';
 
 import { drupal } from "lib/drupal"
+// import { getMenus } from '../lib/get-menus'
 
-import { Layout } from "components/layout"
+
+import { RootLayout } from "components/RootLayout"
 import { Metatag } from "components/metatag"
 import { Node, RESOURCE_TYPES, RESOURCE_INCLUDES } from "components/node"
 
 interface NodePageProps {
-  resource: DrupalNode
-}
+    resource: DrupalNode;
+    // menus: {
+    //   main: DrupalMenuLinkContent[];
+    //   footer: DrupalMenuLinkContent[];
+    // };
+  }
 
-export default function NodePage({ resource }: NodePageProps) {
+export default function NodePage({
+    // menus,
+    resource
+}: NodePageProps) {
+    // console.log('menus:', menus);
+
   if (!resource) return null
 
   return (
-    <Layout>
+    <RootLayout
+        // menus={menus}
+    >
       <Head>
         <title>{resource.title}</title>
         {resource.metatag && <Metatag data={resource.metatag} />}
       </Head>
       <Node resource={resource} />
-    </Layout>
+    </RootLayout>
   )
 }
 
@@ -81,6 +95,7 @@ export async function getStaticProps(
   return {
     props: {
       resource,
+    //   menus: await getMenus(context),
     },
   }
 }
