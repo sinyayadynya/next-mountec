@@ -1,6 +1,7 @@
 import * as React from "react";
 import { DrupalNode } from "next-drupal";
 
+import { NodeAboutPage } from "components/node--about_page";
 import { NodeArticle } from "components/node--article";
 import { NodeEvent } from "components/node--event";
 import { NodeOrganization } from "components/node--organization";
@@ -10,23 +11,26 @@ import { NodePlace } from "components/node--place";
 import { DrupalEntity } from "components/entity";
 
 export const RESOURCE_TYPES = [
-  "node--article",
-  "node--event",
-  "node--organization",
-  "node--page",
-  "node--person",
-  "node--place",
+    "node--about_page",
+    "node--article",
+    "node--event",
+    "node--organization",
+    "node--page",
+    "node--person",
+    "node--place",
 ];
 
 export const RESOURCE_INCLUDES = {
-  "node--article": "uid,image,keywords,author,author.uid,author.image",
-  "node--event":
-    "uid,image,image.uid,image.thumbnail,image.image,location,location.uid,location.image,organizer,organizer.uid,organizer.image,performer,performer.uid,performer.image",
-  "node--organization": "uid,image,image.uid,image.thumbnail,image.image",
-  "node--page":
-    "uid,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
-  "node--person": "uid,image,image.uid,image.thumbnail,image.image",
-  "node--place": "uid,image,image.uid,image.thumbnail,image.image",
+    "node--about_page":
+        "uid,about,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
+    "node--article": "uid,image,keywords,author,author.uid,author.image",
+    "node--event":
+        "uid,image,image.uid,image.thumbnail,image.image,location,location.uid,location.image,organizer,organizer.uid,organizer.image,performer,performer.uid,performer.image",
+    "node--organization": "uid,image,image.uid,image.thumbnail,image.image",
+    "node--page":
+        "uid,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
+    "node--person": "uid,image,image.uid,image.thumbnail,image.image",
+    "node--place": "uid,image,image.uid,image.thumbnail,image.image",
 };
 
 interface NodePageProps {
@@ -35,6 +39,9 @@ interface NodePageProps {
 
 export function Node({ resource }: NodePageProps) {
   switch (resource.type) {
+    case "node--about_page":
+      return <NodeAboutPage node={resource} />;
+
     case "node--article":
       return <NodeArticle node={resource} />;
 
