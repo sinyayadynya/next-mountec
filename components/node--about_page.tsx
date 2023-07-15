@@ -11,6 +11,8 @@ import { PageIntro } from 'components/PageIntro'
 import { SectionIntro } from 'components/SectionIntro'
 import { StatList, StatListItem } from 'components/StatList'
 
+import { drupal } from "lib/drupal"
+
 
 interface NodePageProps {
   node: DrupalNode;
@@ -47,7 +49,7 @@ function Culture() {
         </Container>
       </div>
     )
-}
+  }
 
 export const metadata = {
     title: 'About Us',
@@ -87,7 +89,6 @@ export function NodeAboutPage({ node, ...props }: NodePageProps) {
         <section>
             {node.main_entity && (
                 <div>
-                    {/* entity_reference_revisions */}
                     <pre>{JSON.stringify(node.main_entity, null, 2)}</pre>
                 </div>
             )}
@@ -95,75 +96,6 @@ export function NodeAboutPage({ node, ...props }: NodePageProps) {
       </div>
 
       <ContactSection />
-
-
-      {/* <section>
-        <h2 className="mb-2 text-4xl">General information</h2>
-
-        {node.text?.processed && (
-          <div className="mb-4">
-            <FormattedText processed={node.text.processed} />
-          </div>
-        )}
-
-        {node.subtype && (
-          <div className="mb-4">
-            <h3 className="mb-1 text-2xl">Subtype</h3>
-            <div>{node.subtype}</div>
-          </div>
-        )}
-      </section> */}
-
-      {/* <section>
-        <h2 className="mb-2 text-4xl">Media/Assets</h2>
-
-        {node.primary_image_of_page && (
-          <div className="mb-4">
-            <h3 className="mb-1 text-2xl">Primary image of page</h3>
-            <DrupalEntity entity={node.primary_image_of_page} />
-          </div>
-        )}
-      </section> */}
-
-      {/* <section>
-        <h2 className="mb-2 text-4xl">Links</h2>
-
-        {node.related_link && (
-          <div className="mb-4">
-            <h3 className="mb-1 text-2xl">Related links</h3>
-            <div>
-              {node.related_link.map((item, i) => (
-                <div key={i}>
-                  <a
-                    className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-                    href={item.uri}
-                  >
-                    {item.title || item.uri}
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {node.significant_link && (
-          <div className="mb-4">
-            <h3 className="mb-1 text-2xl">Significant links</h3>
-            <div>
-              {node.significant_link.map((item, i) => (
-                <div key={i}>
-                  <a
-                    className="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
-                    href={item.uri}
-                  >
-                    {item.title || item.uri}
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </section> */}
 
     </article>
   );
