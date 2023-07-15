@@ -11,8 +11,7 @@ import { PageIntro } from 'components/PageIntro'
 import { SectionIntro } from 'components/SectionIntro'
 import { StatList, StatListItem } from 'components/StatList'
 
-import { drupal } from "lib/drupal"
-
+import { drupal } from 'lib/drupal'
 
 interface NodePageProps {
   node: DrupalNode;
