@@ -107,6 +107,45 @@ export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
                     </FadeIn>
                 )}
 
+
+                {node.about && (
+                    <div className="mb-4">
+                    <h3 className="mb-1 text-2xl">Key Results</h3>
+                    {/* entity_reference_revisions */}
+                    <pre>{JSON.stringify(node.about, null, 2)}</pre>
+                    </div>
+                )}
+
+        {node.about && (
+          <div className="mb-4">
+            <h3 className="mb-1 text-2xl">About</h3>
+            <div>
+              {node.about.map((item, i) => (
+                <DrupalEntity key={i} entity={item} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {node.subject_of && (
+          <div className="mb-4">
+            <h3 className="mb-1 text-2xl">Subject of</h3>
+            <div>
+              {node.subject_of.map((item, i) => (
+                <DrupalEntity key={i} entity={item} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {node.field_key_results && (
+            <div className="mb-4">
+            <h3 className="mb-1 text-2xl">Key Results</h3>
+            {/* entity_reference_revisions */}
+            <pre>{JSON.stringify(node.field_key_results, null, 2)}</pre>
+            </div>
+        )}
+
             </article>
 
 
