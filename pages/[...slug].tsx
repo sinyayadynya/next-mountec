@@ -93,7 +93,13 @@ export async function getStaticProps(
       .addInclude(['uid'])
       .addInclude(['image.image'])
       .addInclude(['source_organization'])
-      .addFields('node--case_study', ['title', 'path', 'image', 'uid', 'created', 'source_organization', 'copyright_year', 'teaches', 'is_based_on', 'description', 'article_body']);
+      .addInclude(['subject_of'])
+      .addInclude(['about'])
+      .addFields('node--case_study', ['title', 'path', 'image', 'uid', 'created', 'source_organization', 'copyright_year', 'teaches', 'is_based_on', 'description', 'article_body', 'about']);
+  }
+
+  if (type === 'node--contact_page') {
+    params.addInclude(['primary_image_of_page.image']);
   }
 
   if (type === 'node--how_to') {

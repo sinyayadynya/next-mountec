@@ -5,6 +5,7 @@ import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
 import { NodeAboutPage } from "components/node--about_page";
 import { NodeArticle } from "components/node--article";
 import { NodeCaseStudy } from "components/node--case_study";
+import { NodeContactPage } from "components/node--contact_page";
 import { NodeEvent } from "components/node--event";
 import { NodeHowTo } from "components/node--how_to";
 import { NodeOrganization } from "components/node--organization";
@@ -17,6 +18,7 @@ export const RESOURCE_TYPES = [
     "node--about_page",
     "node--article",
     "node--case_study",
+    "node--contact_page",
     "node--event",
     "node--how_to",
     "node--organization",
@@ -29,7 +31,9 @@ export const RESOURCE_INCLUDES = {
     "node--about_page":
         "uid,about,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
     "node--article": "uid,image,keywords,author,author.uid,author.image",
-    "node--case_study": "uid,image,image.uid,image.thumbnail,image.image,keywords,author,author.uid,author.image,source_organization,source_organization.uid,source_organization.name,copyright_year,teaches,is_based_on",
+    "node--case_study": "uid,image,image.uid,image.thumbnail,image.image,keywords,author,author.uid,author.image,source_organization,source_organization.uid,source_organization.name,copyright_year,teaches,is_based_on,about,about.name,about.variable_measured,subject_of",
+    "node--contact_page":
+        "uid,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
     "node--event":
         "uid,image,image.uid,image.thumbnail,image.image,location,location.uid,location.image,organizer,organizer.uid,organizer.image,performer,performer.uid,performer.image",
     "node--how_to":
@@ -55,6 +59,9 @@ export function Node({ resource }: NodePageProps) {
 
     case "node--case_study":
         return <NodeCaseStudy node={resource} />;
+
+    case "node--contact_page":
+        return <NodeContactPage node={resource} />;
 
     case "node--event":
       return <NodeEvent node={resource} />;
