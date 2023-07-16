@@ -12,28 +12,28 @@ export function NodePerson({ node, ...props }: NodePersonProps) {
       <h1 className="mb-4 text-6xl">{node.title}</h1>
 
       <section>
-        <h2 className="mb-2 text-4xl">General information</h2>
+        {/* <h2 className="mb-2 text-4xl">General information</h2> */}
 
         {node.description?.processed && (
           <div className="mb-4">
-            <h3 className="mb-1 text-2xl">Description</h3>
+            {/* <h3 className="mb-1 text-2xl">Description</h3> */}
             <FormattedText processed={node.description.processed} />
           </div>
         )}
       </section>
 
       <section>
-        <h2 className="mb-2 text-4xl">Media/Assets</h2>
+        {/* <h2 className="mb-2 text-4xl">Media/Assets</h2> */}
 
-        {node.image && (
+        {/* {node.image && (
           <div className="mb-4">
             <h3 className="mb-1 text-2xl">Image</h3>
             <DrupalEntity entity={node.image} />
           </div>
-        )}
+        )} */}
       </section>
 
-      <section>
+      {/* <section>
         <h2 className="mb-2 text-4xl">Biographical information</h2>
 
         {node.additional_name && (
@@ -88,7 +88,7 @@ export function NodePerson({ node, ...props }: NodePersonProps) {
             </div>
           </div>
         )}
-      </section>
+      </section> */}
 
       <section>
         <h2 className="mb-2 text-4xl">Contact information</h2>
@@ -118,7 +118,7 @@ export function NodePerson({ node, ...props }: NodePersonProps) {
         )}
       </section>
 
-      <section>
+      {/* <section>
         <h2 className="mb-2 text-4xl">Links</h2>
 
         {node.same_as && (
@@ -138,7 +138,7 @@ export function NodePerson({ node, ...props }: NodePersonProps) {
             </div>
           </div>
         )}
-      </section>
+      </section> */}
     </article>
   );
 }

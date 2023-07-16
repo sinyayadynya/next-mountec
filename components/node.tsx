@@ -1,9 +1,12 @@
 import * as React from "react";
 import { DrupalNode } from "next-drupal";
+import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
 
 import { NodeAboutPage } from "components/node--about_page";
 import { NodeArticle } from "components/node--article";
+import { NodeCaseStudy } from "components/node--case_study";
 import { NodeEvent } from "components/node--event";
+import { NodeHowTo } from "components/node--how_to";
 import { NodeOrganization } from "components/node--organization";
 import { NodePage } from "components/node--page";
 import { NodePerson } from "components/node--person";
@@ -13,7 +16,9 @@ import { DrupalEntity } from "components/entity";
 export const RESOURCE_TYPES = [
     "node--about_page",
     "node--article",
+    "node--case_study",
     "node--event",
+    "node--how_to",
     "node--organization",
     "node--page",
     "node--person",
@@ -24,8 +29,11 @@ export const RESOURCE_INCLUDES = {
     "node--about_page":
         "uid,about,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
     "node--article": "uid,image,keywords,author,author.uid,author.image",
+    "node--case_study": "uid,image,image.uid,image.thumbnail,image.image,keywords,author,author.uid,author.image,source_organization,source_organization.uid,source_organization.name,copyright_year,teaches,is_based_on",
     "node--event":
         "uid,image,image.uid,image.thumbnail,image.image,location,location.uid,location.image,organizer,organizer.uid,organizer.image,performer,performer.uid,performer.image",
+    "node--how_to":
+        "uid,image,image.uid,image.thumbnail,image.image,step",
     "node--organization": "uid,image,image.uid,image.thumbnail,image.image",
     "node--page":
         "uid,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
@@ -45,8 +53,14 @@ export function Node({ resource }: NodePageProps) {
     case "node--article":
       return <NodeArticle node={resource} />;
 
+    case "node--case_study":
+        return <NodeCaseStudy node={resource} />;
+
     case "node--event":
       return <NodeEvent node={resource} />;
+
+    case "node--how_to":
+        return <NodeHowTo node={resource} />;
 
     case "node--organization":
       return <NodeOrganization node={resource} />;

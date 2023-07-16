@@ -3,6 +3,7 @@ import { GetStaticPathsResult, GetStaticPropsResult } from "next"
 import Head from "next/head"
 import { DrupalNode } from "next-drupal"
 // import { DrupalMenuLinkContent } from 'next-drupal';
+import { DrupalJsonApiParams } from 'drupal-jsonapi-params';
 
 import { drupal } from "lib/drupal"
 // import { getMenus } from '../lib/get-menus'
@@ -61,11 +62,48 @@ export async function getStaticProps(
 
   const type = path.jsonapi.resourceName
 
-  let params = {}
-  if (RESOURCE_INCLUDES[type]) {
-    params = {
-      include: RESOURCE_INCLUDES[type],
-    }
+//   let params = {}
+//   if (RESOURCE_INCLUDES[type]) {
+//     params = {
+//       include: RESOURCE_INCLUDES[type],
+//     }
+//   }
+
+
+  const params = new DrupalJsonApiParams();
+
+  if (type === 'node--page') {
+    params.addInclude(['primary_image_of_page.image']);
+  }
+
+  if (type === 'node--about_page') {
+    params
+        .addInclude(['primary_image_of_page.image'])
+        .addFields('node--person', ['name', 'path']);
+  }
+
+  if (type === 'node--article') {
+    params
+      .addInclude(['uid'])
+      .addFields('node--article', ['title', 'path', 'image', 'uid', 'created', 'description', 'article_body']);
+  }
+
+  if (type === 'node--case_study') {
+    params
+      .addInclude(['uid'])
+      .addInclude(['image.image'])
+      .addInclude(['source_organization'])
+      .addFields('node--case_study', ['title', 'path', 'image', 'uid', 'created', 'source_organization', 'copyright_year', 'teaches', 'is_based_on', 'description', 'article_body']);
+  }
+
+  if (type === 'node--how_to') {
+    params
+      .addInclude(['step'])
+      .addFields('paragraph--how_to_step', ['name', 'description', 'image']);
+  }
+
+  if (type === 'node--person') {
+    params.addInclude(['image.image']);
   }
 
   const resource = await drupal.getResourceFromContext<DrupalNode>(
