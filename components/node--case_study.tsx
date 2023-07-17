@@ -14,6 +14,8 @@ import { PageLinks } from 'components/PageLinks'
 import { formatDate } from 'lib/format-date';
 import { MediaImage } from './media--image';
 import { absoluteUrl } from 'lib/absolute-url';
+import { useEffect, useState } from 'react';
+import { drupal } from 'lib/drupal';
 
 
 interface NodeCaseStudyProps {
@@ -21,6 +23,27 @@ interface NodeCaseStudyProps {
 }
 
 export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
+    const [caseStudies, setCaseStudies] = useState([]);
+
+    useEffect(() => {
+        async function fetchCaseStudies() {
+          const nodes = await drupal.getResourceCollection<DrupalNode[]>(
+            "node--case_study",
+            {
+              params: {
+                "filter[status]": 1,
+                "fields[node--case_study]": "title,path,image,uid,created,description",
+                include: "image,uid",
+                sort: "-created",
+                "page[limit]": 2,
+              },
+            }
+          )
+          setCaseStudies(nodes);
+        }
+
+        fetchCaseStudies();
+      }, []);
 
     return (
         <>
@@ -156,6 +179,13 @@ export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
                 pages={moreCaseStudies}
                 />
             )} */}
+
+            <PageLinks
+                className="mt-24 sm:mt-32 lg:mt-40"
+                title="More case studies"
+                intro=""
+                pages={caseStudies}
+            />
 
             <ContactSection />
         </>
