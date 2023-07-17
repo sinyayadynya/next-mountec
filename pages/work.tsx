@@ -5,6 +5,7 @@ import { DrupalNode } from "next-drupal"
 import { drupal } from "lib/drupal"
 import { RootLayout } from "components/RootLayout"
 import { Container } from 'components/Container'
+import { ContactSection } from 'components/ContactSection'
 import { FadeIn } from 'components/FadeIn'
 import { PageIntro } from 'components/PageIntro'
 import { NodeCaseStudyTeaser } from "components/node--case_study--teaser"
@@ -51,6 +52,8 @@ export default function IndexPage({ nodes }: IndexPageProps) {
                 )}
 
             </div>
+            <ContactSection />
+
         </Container>
 
       </div>
@@ -62,7 +65,7 @@ export async function getStaticProps(
   context
 ): Promise<GetStaticPropsResult<IndexPageProps>> {
   const nodes = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
-    "node--article",
+    "node--case_study",
     context,
     {
       params: {
