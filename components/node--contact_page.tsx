@@ -58,6 +58,8 @@ function RadioInput({ label, ...props }) {
 function ContactForm() {
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
+
 
     async function handleSubmit(event) {
         event.preventDefault()
@@ -80,14 +82,15 @@ function ContactForm() {
           }
         )
 
-        if (response.ok) {
+        if (!response.ok) {
+            const errorData = await response.json();
+            setErrorMessage(errorData.message || 'An error occurred');
+          } else {
             // Show success.
             setIsDialogOpen(true);
             // Reset the form fields
             event.target.reset();
         }
-
-        // Handle error.
       }
 
       function closeDialog() {
@@ -100,6 +103,7 @@ function ContactForm() {
           <h2 className="font-display text-base font-semibold text-neutral-950">
             Work inquiries
           </h2>
+          {errorMessage && <div className="error">{errorMessage}</div>}
           <div className="isolate mt-6 -space-y-px rounded-2xl bg-white/50">
             <TextInput
                 label="Name"
