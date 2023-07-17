@@ -3,6 +3,9 @@ import { DrupalNode } from "next-drupal";
 import { FormattedText } from "components/formatted-text";
 import { DrupalEntity } from "components/entity";
 import Link from 'next/link'
+import { Fragment, useState } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+
 
 import { Border } from 'components/Border'
 import { Button } from 'components/Button'
@@ -53,27 +56,84 @@ function RadioInput({ label, ...props }) {
 }
 
 function ContactForm() {
+
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    async function handleSubmit(event) {
+        event.preventDefault()
+
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/webform_rest/submit`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              webform_id: "contact",
+              name: event.target.name.value,
+              email: event.target.email.value,
+              company: event.target.company.value,
+              phone: event.target.phone.value,
+              message: event.target.message.value,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+
+        if (response.ok) {
+            // Show success.
+            setIsDialogOpen(true);
+            // Reset the form fields
+            event.target.reset();
+        }
+
+        // Handle error.
+      }
+
+      function closeDialog() {
+        setIsDialogOpen(false);
+    }
+
     return (
       <FadeIn className="lg:order-last">
-        <form>
+        <form onSubmit={handleSubmit}>
           <h2 className="font-display text-base font-semibold text-neutral-950">
             Work inquiries
           </h2>
           <div className="isolate mt-6 -space-y-px rounded-2xl bg-white/50">
-            <TextInput label="Name" name="name" autoComplete="name" />
             <TextInput
-              label="Email"
-              type="email"
-              name="email"
-              autoComplete="email"
+                label="Name"
+                type="text"
+                id="name"
+                name="name"
+                autoComplete="name"
+            />
+            <TextInput
+                label="Email"
+                type="email"
+                id="email"
+                name="email"
+                autoComplete="email"
             />
             <TextInput
               label="Company"
+              type="text"
+              id="company"
               name="company"
               autoComplete="organization"
             />
-            <TextInput label="Phone" type="tel" name="phone" autoComplete="tel" />
-            <TextInput label="Message" name="message" />
+            <TextInput
+                label="Phone"
+                type="tel"
+                id="phone"
+                name="phone"
+                autoComplete="tel"
+            />
+            <TextInput
+                label="Message"
+                id="message"
+                name="message"
+            />
             <div className="border border-neutral-300 px-6 py-8 first:rounded-t-2xl last:rounded-b-2xl">
               <fieldset>
                 <legend className="text-base/6 text-neutral-500">Budget</legend>
@@ -90,6 +150,64 @@ function ContactForm() {
             Let’s work together
           </Button>
         </form>
+
+        <Transition appear show={isDialogOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeDialog}>
+
+
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Message sent successfully
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">
+                        Your message has been successfully dispatched into the digital realm.
+                        We've pinged your inbox with a confirmation for your records.
+                    </p>
+                  </div>
+
+                  <div className="mt-4">
+                    <Button
+                      type="button"
+                      onClick={closeDialog}
+                    >
+                      Understood, thanks!
+                    </Button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+
+          </Dialog>
+        </Transition>
+
       </FadeIn>
     )
 }
@@ -147,7 +265,7 @@ export const metadata = {
 }
 
 export function NodeContactPage({ node, ...props }: NodeContactPageProps) {
-  return (
+    return (
     <article {...props}>
 
       <PageIntro eyebrow={node.title} title={node.headline}>
