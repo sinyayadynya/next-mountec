@@ -26,7 +26,10 @@ import { Logo, Logomark } from 'components/Logo'
 import { Offices } from 'components/Offices'
 import { SocialMedia } from 'components/SocialMedia'
 
-const RootLayoutContext = createContext({})
+const RootLayoutContext = createContext({
+    logoHovered: false,
+    setLogoHovered: () => {},
+})
 
 
 function XIcon(props) {
@@ -54,7 +57,7 @@ function Header({
     onToggle,
     toggleRef,
   }) {
-    // let { logoHovered, setLogoHovered } = useContext(RootLayoutContext)
+    let { logoHovered, setLogoHovered } = useContext(RootLayoutContext)
 
     return (
       <Container>
@@ -62,18 +65,18 @@ function Header({
           <Link
             href="/"
             aria-label="Home"
-            // onMouseEnter={() => setLogoHovered(true)}
-            // onMouseLeave={() => setLogoHovered(false)}
+            onMouseEnter={() => setLogoHovered(true)}
+            onMouseLeave={() => setLogoHovered(false)}
           >
             <Logomark
               className="h-8 sm:hidden"
               invert={invert}
-            //   filled={logoHovered}
+              filled={logoHovered}
             />
             <Logo
               className="hidden h-8 sm:block"
               invert={invert}
-            //   filled={logoHovered}
+              filled={logoHovered}
             />
           </Link>
           <div className="flex items-center gap-x-8">
