@@ -77,49 +77,54 @@ function StepType1({ data }) {
 
   export function NodeHowTo({ node, ...props }: NodeHowToProps) {
     return (
-      <article {...props}>
-        <PageIntro eyebrow={node.title} title={node.headline}>
-          {node.description?.processed && (
-            <div>
-              <FormattedText processed={node.description.processed} />
-            </div>
-          )}
-          {node.text?.processed && (
-            <div className="mt-10 max-w-2xl space-y-6 text-base">
-              <FormattedText processed={node.text.processed} />
-            </div>
-          )}
-        </PageIntro>
+        <>
+            <article {...props}>
+                <PageIntro eyebrow={node.title} title={node.headline}>
+                {node.description?.processed && (
+                    <div>
+                    <FormattedText processed={node.description.processed} />
+                    </div>
+                )}
+                {node.text?.processed && (
+                    <div className="mt-10 max-w-2xl space-y-6 text-base">
+                    <FormattedText processed={node.text.processed} />
+                    </div>
+                )}
+                </PageIntro>
 
-        {node.step && node.step.map((step, index) => {
-          switch (index) {
-            case 0:
-              return <StepType1 key={index} data={step} />
-            // Add other step types here
-            default:
-              return null;
-          }
-        })}
+                {node.step && node.step.map((step, index) => {
+                switch (index) {
+                    case 0:
+                    return <StepType1 key={index} data={step} />
+                    // Add other step types here
+                    default:
+                    return null;
+                }
+                })}
 
-        {node.step && node.step.map((step, index) => {
-          switch (index) {
-            case 1:
-              return <StepType2 key={index} data={step} />
-            // Add other step types here
-            default:
-              return null;
-          }
-        })}
+                {node.step && node.step.map((step, index) => {
+                switch (index) {
+                    case 1:
+                    return <StepType2 key={index} data={step} />
+                    // Add other step types here
+                    default:
+                    return null;
+                }
+                })}
 
-        {node.step && node.step.map((step, index) => {
-          switch (index) {
-            case 2:
-              return <StepType3 key={index} data={step} />
-            // Add other step types here
-            default:
-              return null;
-          }
-        })}
-      </article>
+                {node.step && node.step.map((step, index) => {
+                switch (index) {
+                    case 2:
+                    return <StepType3 key={index} data={step} />
+                    // Add other step types here
+                    default:
+                    return null;
+                }
+                })}
+            </article>
+
+            <ContactSection />
+        </>
+
     );
   }
