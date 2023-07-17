@@ -4,7 +4,7 @@ import { DrupalImage } from 'components/image';
 import { DrupalEntity } from 'components/entity';
 import clsx from 'clsx'
 
-
+import { Blockquote } from 'components/Blockquote';
 import { ContactSection } from 'components/ContactSection'
 import { Container } from 'components/Container'
 import { FadeIn } from 'components/FadeIn'
@@ -25,27 +25,29 @@ interface NodeCaseStudyProps {
 export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
     const [caseStudies, setCaseStudies] = useState([]);
 
-    useEffect(() => {
-        async function fetchCaseStudies() {
-          const nodes = await drupal.getResourceCollection<DrupalNode[]>(
-            "node--case_study",
-            {
-              params: {
-                "filter[status]": 1,
-                "fields[node--case_study]": "title,path,image,uid,created,description",
-                include: "image,uid",
-                sort: "-created",
-                "page[limit]": 2,
-              },
+        useEffect(() => {
+            async function fetchCaseStudies() {
+            const nodes = await drupal.getResourceCollection<DrupalNode[]>(
+                "node--case_study",
+                {
+                params: {
+                    "filter[status]": 1,
+                    "fields[node--case_study]": "title,path,image,uid,created,description",
+                    include: "image,uid",
+                    sort: "-created",
+                    "page[limit]": 2,
+                },
+                }
+            )
+            setCaseStudies(nodes);
             }
-          )
-          setCaseStudies(nodes);
-        }
 
-        fetchCaseStudies();
-      }, []);
+            fetchCaseStudies();
+        }, []);
 
-    return (
+
+
+        return (
         <>
             <article className="mt-24 sm:mt-32 lg:mt-40" {...props}>
 
@@ -105,80 +107,115 @@ export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
                     </FadeIn>
                 </header>
 
-                {node.article_body?.processed && (
-                    <FadeIn>
-                        <div className="mt-24 sm:mt-32 lg:mt-40">
-                            <div className={clsx('[&>*]:mx-auto [&>*]:max-w-3xl [&>:first-child]:!mt-0 [&>:last-child]:!mb-0')}>
-                                <div className='typography'>
-                                    <h2>Overview</h2>
-                                    <FormattedText processed={node.article_body.processed} />
-                                    {node.is_based_on && node.is_based_on.length > 0 && (
-                                        <h2>What we did</h2>
-                                    )}
-                                </div>
-                                {node.is_based_on && node.is_based_on.length > 0 && (
-                                    <ul className="my-6 flex flex-wrap gap-4">
-                                        {node.is_based_on.map((link, index) => (
-                                        <li key={index} className='rounded-full bg-neutral-100 px-4 py-1.5 text-base text-neutral-600'>
-                                            {link.uri === 'route:<nolink>' ? link.title : <a href={link.uri}>{link.title}</a>}
-                                        </li>
-                                        ))}
-                                    </ul>
-                                )}
+                <div className='mx-auto max-w-7xl px-6 lg:px-8 mt-24 sm:mt-32 lg:mt-40'>
+
+                    <div class="mx-auto max-w-2xl lg:max-w-none">
+
+                        <div className='[&>*]:mx-auto [&>*]:max-w-3xl [&>:first-child]:!mt-0 [&>:last-child]:!mb-0'>
+
+                            {node.article_body?.processed && (
+                                <FadeIn>
+                                    <div className="mt-24 sm:mt-32 lg:mt-40">
+                                        <div className={clsx('[&>*]:mx-auto [&>*]:max-w-3xl [&>:first-child]:!mt-0 [&>:last-child]:!mb-0')}>
+                                            <div className='typography'>
+                                                <h2>Overview</h2>
+                                                <FormattedText processed={node.article_body.processed} />
+                                                {node.is_based_on && node.is_based_on.length > 0 && (
+                                                    <h2>What we did</h2>
+                                                )}
+                                            </div>
+                                            {node.is_based_on && node.is_based_on.length > 0 && (
+                                                <ul className="my-6 flex flex-wrap gap-4">
+                                                    {node.is_based_on.map((link, index) => (
+                                                    <li key={index} className='rounded-full bg-neutral-100 px-4 py-1.5 text-base text-neutral-600'>
+                                                        {link.uri === 'route:<nolink>' ? link.title : <a href={link.uri}>{link.title}</a>}
+                                                    </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </div>
+                                    </div>
+                                </FadeIn>
+                            )}
+
+        {/*
+                        {node.about && (
+                            <div className="mb-4">
+                            <h3 className="mb-1 text-2xl">Key Results</h3>
+                            <pre>{JSON.stringify(node.about, null, 2)}</pre>
+                            </div>
+                        )} */}
+
+                        {/* {node.about && (
+                        <div className="mb-4">
+                            <h3 className="mb-1 text-2xl">About</h3>
+                            <div>
+                            {node.about.map((item, i) => (
+                                <DrupalEntity key={i} entity={item} />
+                            ))}
                             </div>
                         </div>
-                    </FadeIn>
-                )}
+                        )} */}
 
 
-                {node.about && (
-                    <div className="mb-4">
-                    <h3 className="mb-1 text-2xl">Key Results</h3>
-                    {/* entity_reference_revisions */}
-                    <pre>{JSON.stringify(node.about, null, 2)}</pre>
+
+                        {node.subject_of && node.subject_of.length > 0 && (
+                            <div className="mt-36">
+                                {node.subject_of.map((recommendation, i) => (
+                                    <Blockquote
+                                        key={i}
+                                        author={{
+                                            name: recommendation.author.title,
+                                            role: 'Role of the person' // replace this with the actual role
+                                        }}
+                                        image={{
+                                            src: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${recommendation.author.image.image.uri.url}`,
+                                            alt: recommendation.author.title,
+                                            width: 500, // replace with actual width
+                                            height: 500, // replace with actual height
+                                        }}
+                                    >
+                                        {recommendation.text.processed}
+                                    </Blockquote>
+                                ))}
+                            </div>
+                        )}
+
+
+
+
+
+
+
+                            {/* {node.subject_of && (
+                            <div className="mb-4">
+                                <h3 className="mb-1 text-2xl">Subject of</h3>
+                                <div>
+                                {node.subject_of.map((item, i) => (
+                                    <DrupalEntity key={i} entity={item} />
+                                ))}
+                                </div>
+                            </div>
+                            )} */}
+
+
+                            <div>
+                                {node.field_key_results && (
+                                    <div className="mb-4">
+                                    <h3 className="mb-1 text-2xl">Key Results</h3>
+                                    {/* entity_reference_revisions */}
+                                    <pre>{JSON.stringify(node.field_key_results, null, 2)}</pre>
+                                    </div>
+                                )}
+                            </div>
+
+                        </div>
+
                     </div>
-                )}
 
-        {node.about && (
-          <div className="mb-4">
-            <h3 className="mb-1 text-2xl">About</h3>
-            <div>
-              {node.about.map((item, i) => (
-                <DrupalEntity key={i} entity={item} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {node.subject_of && (
-          <div className="mb-4">
-            <h3 className="mb-1 text-2xl">Subject of</h3>
-            <div>
-              {node.subject_of.map((item, i) => (
-                <DrupalEntity key={i} entity={item} />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {node.field_key_results && (
-            <div className="mb-4">
-            <h3 className="mb-1 text-2xl">Key Results</h3>
-            {/* entity_reference_revisions */}
-            <pre>{JSON.stringify(node.field_key_results, null, 2)}</pre>
-            </div>
-        )}
+                </div>
 
             </article>
-
-
-            {/* {moreCaseStudies.length > 0 && (
-                <PageLinks
-                className="mt-24 sm:mt-32 lg:mt-40"
-                title="More case studies"
-                pages={moreCaseStudies}
-                />
-            )} */}
 
             <PageLinks
                 className="mt-24 sm:mt-32 lg:mt-40"

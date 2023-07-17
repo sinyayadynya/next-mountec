@@ -25,6 +25,7 @@ export const RESOURCE_TYPES = [
     "node--page",
     "node--person",
     "node--place",
+    "node--recommendation",
 ];
 
 export const RESOURCE_INCLUDES = {
@@ -43,6 +44,8 @@ export const RESOURCE_INCLUDES = {
         "uid,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
     "node--person": "uid,image,image.uid,image.thumbnail,image.image",
     "node--place": "uid,image,image.uid,image.thumbnail,image.image",
+    "node--recommendation": "uid",
+
 };
 
 interface NodePageProps {
