@@ -37,7 +37,7 @@ export const RESOURCE_INCLUDES = {
     "node--event":
         "uid,image,image.uid,image.thumbnail,image.image,location,location.uid,location.image,organizer,organizer.uid,organizer.image,performer,performer.uid,performer.image",
     "node--how_to":
-        "uid,image,image.uid,image.thumbnail,image.image,step",
+        "uid,image,image.uid,image.thumbnail,image.image,step,step.image,step.image.thumbnail,step.image.image",
     "node--organization": "uid,image,image.uid,image.thumbnail,image.image",
     "node--page":
         "uid,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
