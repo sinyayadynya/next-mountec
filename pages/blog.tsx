@@ -4,6 +4,7 @@ import { DrupalNode } from "next-drupal"
 
 import { drupal } from "lib/drupal"
 import { RootLayout } from "components/RootLayout"
+import { ContactSection } from 'components/ContactSection'
 import { Container } from 'components/Container'
 import { PageIntro } from 'components/PageIntro'
 import { NodeArticleTeaser } from "components/node--article--teaser"
@@ -37,8 +38,7 @@ export default function IndexPage({ nodes }: IndexPageProps) {
                 {nodes?.length ? (
                     nodes.map((node) => (
                         <div key={node.id}>
-                        <NodeArticleTeaser node={node} />
-                        <hr className="my-20" />
+                            <NodeArticleTeaser node={node} />
                         </div>
                     ))
                     ) : (
@@ -46,6 +46,9 @@ export default function IndexPage({ nodes }: IndexPageProps) {
                 )}
 
             </div>
+
+            <ContactSection />
+
         </Container>
 
       </div>
