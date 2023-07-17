@@ -130,7 +130,7 @@ function Team({ team }) {
               "fields[node--article]": "title,path,image,uid,created,description",
               include: "image,uid",
               sort: "-created",
-              "page[limit]": 4,
+              "page[limit]": 2,
             },
           }
         )
