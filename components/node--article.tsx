@@ -10,6 +10,8 @@ import { Container } from 'components/Container'
 import { FadeIn } from 'components/FadeIn'
 import { PageLinks } from 'components/PageLinks'
 import { formatDate } from 'lib/format-date';
+import { useEffect, useState } from 'react';
+import { drupal } from 'lib/drupal';
 
 
 interface NodeArticleProps {
@@ -17,6 +19,28 @@ interface NodeArticleProps {
 }
 
 export function NodeArticle({ node, ...props }: NodeArticleProps) {
+    const [blogArticles, setBlogArticles] = useState([]);
+
+    useEffect(() => {
+        async function fetchBlogArticles() {
+          const nodes = await drupal.getResourceCollection<DrupalNode[]>(
+            "node--article",
+            {
+              params: {
+                "filter[status]": 1,
+                "fields[node--article]": "title,path,image,uid,created,description",
+                include: "image,uid",
+                sort: "-created",
+                "page[limit]": 2,
+              },
+            }
+          )
+          setBlogArticles(nodes);
+        }
+
+        fetchBlogArticles();
+      }, []);
+
     return (
         <article {...props}>
 
@@ -77,6 +101,13 @@ export function NodeArticle({ node, ...props }: NodeArticleProps) {
                 </section> */}
 
             </Container>
+
+            <PageLinks
+                className="mt-24 sm:mt-32 lg:mt-40"
+                title="From the blog"
+                intro="Our team of skilled territorial developers and tourism professionals is committed to fostering sustainable prosperity. Through comprehensive diagnostics to sustainable tourism strategies, we focus on enriching communities and preserving natural beauty."
+                pages={blogArticles}
+            />
 
             {/* {moreArticles.length > 0 && (
                     <PageLinks
