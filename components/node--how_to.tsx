@@ -48,7 +48,7 @@ function StepType1({ data }) {
     return (
         <Section title={data.name} image={{ src: data.image }}>
         <div className="space-y-6 text-base text-neutral-600">
-          <FormattedText processed={data.description.processed} />
+          {/* <FormattedText processed={data.description.processed} /> */}
         </div>
       </Section>
     )
@@ -58,7 +58,7 @@ function StepType1({ data }) {
     return (
         <Section title={data.name} image={{ src: data.image }}>
         <div className="space-y-6 text-base text-neutral-600">
-          <FormattedText processed={data.description.processed} />
+          {/* <FormattedText processed={data.description.processed} /> */}
         </div>
       </Section>
     )
@@ -68,7 +68,7 @@ function StepType1({ data }) {
     return (
         <Section title={data.name} image={{ src: data.image }}>
         <div className="space-y-6 text-base text-neutral-600">
-          <FormattedText processed={data.description.processed} />
+          {/* <FormattedText processed={data.description.processed} /> */}
         </div>
       </Section>
     )
@@ -80,16 +80,16 @@ function StepType1({ data }) {
         <>
             <article {...props}>
                 <PageIntro eyebrow={node.title} title={node.headline}>
-                {node.description?.processed && (
-                    <div>
-                    <FormattedText processed={node.description.processed} />
-                    </div>
-                )}
-                {node.text?.processed && (
-                    <div className="mt-10 max-w-2xl space-y-6 text-base">
-                    <FormattedText processed={node.text.processed} />
-                    </div>
-                )}
+                    {node.description?.processed && (
+                        <div>
+                        <FormattedText processed={node.description.processed} />
+                        </div>
+                    )}
+                    {node.text?.processed && (
+                        <div className="mt-10 max-w-2xl space-y-6 text-base">
+                        <FormattedText processed={node.text.processed} />
+                        </div>
+                    )}
                 </PageIntro>
 
                 {node.step && node.step.map((step, index) => {
