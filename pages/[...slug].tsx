@@ -98,13 +98,15 @@ if (type === 'node--case_study') {
       .addInclude(['subject_of.author'])
       .addInclude(['subject_of.author.image']) // Include the image field of the author
       .addInclude(['subject_of.author.image.image'])
-      .addInclude(['has_part'])
-      .addInclude(['has_part.paragraph_type'])
+      .addInclude(['has_part']) // Include the has_part field
       .addFields('node--case_study', ['title', 'path', 'image', 'uid', 'created', 'source_organization', 'copyright_year', 'teaches', 'is_based_on', 'description', 'article_body', 'about', 'subject_of', 'has_part', 'field_key_results'])
       .addFields('node--recommendation', ['author', 'text']) // replace 'node--recommendation' with the correct entity type for the 'subject_of' entity
       .addFields('node--person', ['title', 'job_title', 'image']) // Include the image field in the fields for the person entity
-      .addFields('node--organization', ['title', 'logo']);
-  }
+      .addFields('node--organization', ['title', 'logo'])
+      .addFields('paragraph--data_catalog', ['dataset']); // Include the dataset field in the fields for the data_catalog entity
+}
+
+
 
   if (type === 'node--organization') {
     params

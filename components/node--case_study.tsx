@@ -11,6 +11,7 @@ import { FadeIn } from 'components/FadeIn'
 import { GrayscaleTransitionImage } from 'components/GrayscaleTransitionImage'
 import { PageIntro } from 'components/PageIntro'
 import { PageLinks } from 'components/PageLinks'
+import { StatList, StatListItem } from 'components/StatList';
 import { formatDate } from 'lib/format-date';
 import { MediaImage } from './media--image';
 import { absoluteUrl } from 'lib/absolute-url';
@@ -139,27 +140,6 @@ export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
                                 </FadeIn>
                             )}
 
-        {/*
-                        {node.about && (
-                            <div className="mb-4">
-                            <h3 className="mb-1 text-2xl">Key Results</h3>
-                            <pre>{JSON.stringify(node.about, null, 2)}</pre>
-                            </div>
-                        )} */}
-
-                        {/* {node.about && (
-                        <div className="mb-4">
-                            <h3 className="mb-1 text-2xl">About</h3>
-                            <div>
-                            {node.about.map((item, i) => (
-                                <DrupalEntity key={i} entity={item} />
-                            ))}
-                            </div>
-                        </div>
-                        )} */}
-
-
-
                         {node.subject_of && node.subject_of.length > 0 && (
                             <div className="mt-36">
                                 {node.subject_of.map((recommendation, i) => (
@@ -182,35 +162,16 @@ export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
                             </div>
                         )}
 
-
-
-
-
-
-
-                            {/* {node.subject_of && (
-                            <div className="mb-4">
-                                <h3 className="mb-1 text-2xl">Subject of</h3>
-                                <div>
-                                {node.subject_of.map((item, i) => (
-                                    <DrupalEntity key={i} entity={item} />
-                                ))}
-                                </div>
-                            </div>
-                            )} */}
-                            {node.has_part.id}
-
-                            <div>
-                            {node.has_part && (
-                                <div className="mb-4">
-                                    <h3 className="mb-1 text-2xl">Data Catalog</h3>
-                                    {/* entity_reference_revisions */}
-                                    <pre>{JSON.stringify(node.has_part, null, 2)}</pre>
-                                </div>
-                            )}
-                            </div>
-
                         </div>
+
+                        <div className='my-32 !max-w-none [&>div:items-start]'>
+                            <StatList>
+                                {node.has_part.map((part, i) => (
+                                    <StatListItem key={i} label={part.name} value={part.variable_measured} />
+                                ))}
+                            </StatList>
+                        </div>
+
 
                     </div>
 
