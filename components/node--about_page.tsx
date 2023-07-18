@@ -122,19 +122,23 @@ function Team({ team }) {
       }
 
       async function fetchBlogArticles() {
-        const nodes = await drupal.getResourceCollection<DrupalNode[]>(
-          "node--article",
-          {
-            params: {
-              "filter[status]": 1,
-              "fields[node--article]": "title,path,image,uid,created,description",
-              include: "image,uid",
-              sort: "-created",
-              "page[limit]": 2,
-            },
-          }
-        )
-        setBlogArticles(nodes);
+        try {
+          const nodes = await drupal.getResourceCollection<DrupalNode[]>(
+            "node--article",
+            {
+              params: {
+                "filter[status]": 1,
+                "fields[node--article]": "title,path,image,uid,created,description",
+                include: "image,uid",
+                sort: "-created",
+                "page[limit]": 2,
+              },
+            }
+          )
+          setBlogArticles(nodes);
+        } catch (error) {
+          console.error('Failed to fetch blog articles:', error);
+        }
       }
 
       fetchTeam();

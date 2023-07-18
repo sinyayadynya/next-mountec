@@ -32,20 +32,20 @@ export const RESOURCE_INCLUDES = {
     "node--about_page":
         "uid,about,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
     "node--article": "uid,image,keywords,author,author.uid,author.image",
-    "node--case_study": "uid,image,image.uid,image.thumbnail,image.image,keywords,author,author.uid,author.image,source_organization,source_organization.uid,source_organization.name,copyright_year,teaches,is_based_on,about,about.name,about.variable_measured,subject_of",
+    "node--case_study": "uid,image,image.uid,image.thumbnail,image.image,keywords,author,author.uid,author.image,source_organization,source_organization.uid,source_organization.title,copyright_year,teaches,is_based_on,about,about.name,about.variable_measured,subject_of,has_part",
+    "node--case_study--teaser": "uid,image,image.uid,image.thumbnail,image.image,keywords,author,author.uid,author.image,source_organization,source_organization.uid,source_organization.title,copyright_year,teaches,is_based_on,about,about.name,about.variable_measured,subject_of",
     "node--contact_page":
         "uid,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
     "node--event":
         "uid,image,image.uid,image.thumbnail,image.image,location,location.uid,location.image,organizer,organizer.uid,organizer.image,performer,performer.uid,performer.image",
     "node--how_to":
         "uid,image,image.uid,image.thumbnail,image.image,step,step.image,step.image.thumbnail,step.image.image",
-    "node--organization": "uid,image,image.uid,image.thumbnail,image.image",
+    "node--organization": "uid,image,image.uid,image.thumbnail,image.image,logo,logo.image",
     "node--page":
         "uid,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
     "node--person": "uid,image,image.uid,image.thumbnail,image.image",
     "node--place": "uid,image,image.uid,image.thumbnail,image.image",
     "node--recommendation": "uid",
-
 };
 
 interface NodePageProps {

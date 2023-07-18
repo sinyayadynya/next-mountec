@@ -45,9 +45,10 @@ export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
             fetchCaseStudies();
         }, []);
 
-
+        console.log(node.has_part)
 
         return (
+
         <>
             <article className="mt-24 sm:mt-32 lg:mt-40" {...props}>
 
@@ -109,7 +110,7 @@ export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
 
                 <div className='mx-auto max-w-7xl px-6 lg:px-8 mt-24 sm:mt-32 lg:mt-40'>
 
-                    <div class="mx-auto max-w-2xl lg:max-w-none">
+                    <div className="mx-auto max-w-2xl lg:max-w-none">
 
                         <div className='[&>*]:mx-auto [&>*]:max-w-3xl [&>:first-child]:!mt-0 [&>:last-child]:!mb-0'>
 
@@ -166,13 +167,13 @@ export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
                                         key={i}
                                         author={{
                                             name: recommendation.author.title,
-                                            role: 'Role of the person' // replace this with the actual role
+                                            role: recommendation.author.job_title,
                                         }}
                                         image={{
                                             src: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${recommendation.author.image.image.uri.url}`,
                                             alt: recommendation.author.title,
-                                            width: 500, // replace with actual width
-                                            height: 500, // replace with actual height
+                                            width: 1800, // replace with actual width
+                                            height: 1800, // replace with actual height
                                         }}
                                     >
                                         {recommendation.text.processed}
@@ -197,16 +198,16 @@ export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
                                 </div>
                             </div>
                             )} */}
-
+                            {node.has_part.id}
 
                             <div>
-                                {node.field_key_results && (
-                                    <div className="mb-4">
-                                    <h3 className="mb-1 text-2xl">Key Results</h3>
+                            {node.has_part && (
+                                <div className="mb-4">
+                                    <h3 className="mb-1 text-2xl">Data Catalog</h3>
                                     {/* entity_reference_revisions */}
-                                    <pre>{JSON.stringify(node.field_key_results, null, 2)}</pre>
-                                    </div>
-                                )}
+                                    <pre>{JSON.stringify(node.has_part, null, 2)}</pre>
+                                </div>
+                            )}
                             </div>
 
                         </div>

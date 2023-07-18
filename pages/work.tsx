@@ -128,24 +128,27 @@ export default function IndexPage({ nodes }: IndexPageProps) {
 
 
 export async function getStaticProps(
-  context
-): Promise<GetStaticPropsResult<IndexPageProps>> {
-  const nodes = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
-    "node--case_study",
-    context,
-    {
-      params: {
-        "filter[status]": 1,
-        "fields[node--case_study]": "title,description,path,image,uid,created",
-        include: "image,uid",
-        sort: "-created",
+    context
+  ): Promise<GetStaticPropsResult<IndexPageProps>> {
+    const nodes = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
+      "node--case_study",
+      context,
+      {
+        params: {
+            "filter[status]": 1,
+            "fields[node--case_study]": "title,description,path,image,uid,created,source_organization,copyright_year,teaches,subject_of,has_part",
+            "fields[node--organization]": "title,logo",
+            "fields[node--recommendation]": "author,text",
+            "fields[node--person]": "title,job_title",
+            include: "image,uid,source_organization,source_organization.logo,source_organization.logo.image,subject_of,subject_of.author",
+            sort: "-created",
+          },
+      }
+    )
+
+    return {
+      props: {
+        nodes,
       },
     }
-  )
-
-  return {
-    props: {
-      nodes,
-    },
   }
-}

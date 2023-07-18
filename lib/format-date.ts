@@ -12,3 +12,9 @@ export function formatDateTime(input: string): string {
     + ' '
     + dateTime.toLocaleTimeString('en-US');
 }
+
+export function formatDateMonth(input: string): string {
+    const date = new Date(input);
+    const options = { year: 'numeric', month: 'long' };
+    return date.toLocaleDateString('en-US', options);
+}
