@@ -23,12 +23,14 @@ export function NodeCaseStudyCard({ node, ...props }: NodeCaseStudyCardProps) {
                 <h3>
                   <Link href={node.path.alias}>
                         <span className="absolute inset-0 rounded-3xl" />
-                        {/* <Image
-                            src={node.logo}
-                            alt={node.client}
-                            className="h-16 w-16"
-                            unoptimized
-                        /> */}
+                        <Image
+                                src={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${node.source_organization.logo[2].image.uri.url}`}
+                                alt={node.source_organization.logo[2].image.resourceIdObjMeta.alt}
+                                width={64} // replace with your desired width
+                                height={64} // replace with your desired height
+                                className="h-16 w-16 flex-none"
+                                unoptimized
+                            />
                     </Link>
                 </h3>
                 <p className="mt-6 flex gap-x-2 text-sm text-neutral-950">

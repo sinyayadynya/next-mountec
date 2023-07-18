@@ -46,8 +46,6 @@ export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
             fetchCaseStudies();
         }, []);
 
-        console.log(node.has_part)
-
         return (
 
         <>
@@ -164,7 +162,7 @@ export function NodeCaseStudy({ node, ...props }: NodeCaseStudyProps) {
 
                         </div>
 
-                        <div className='my-32 !max-w-none [&>div:items-start]'>
+                        <div className='my-32 !max-w-none'>
                             <StatList>
                                 {node.has_part.map((part, i) => (
                                     <StatListItem key={i} label={part.name} value={part.variable_measured} />

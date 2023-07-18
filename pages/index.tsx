@@ -14,6 +14,7 @@ import { List, ListItem } from 'components/List'
 import { SectionIntro } from 'components/SectionIntro'
 import { StylizedImage } from 'components/StylizedImage'
 import { Testimonial } from 'components/Testimonial'
+
 import logoBrightPath from 'images/clients/bright-path/logo-light.svg'
 import logoFamilyFund from 'images/clients/family-fund/logo-light.svg'
 import logoGreenLife from 'images/clients/green-life/logo-light.svg'
@@ -255,8 +256,9 @@ export async function getStaticProps(
     {
       params: {
         "filter[status]": 1,
-        "fields[node--case_study]": "title,description,copyright_year,path,image,uid,created",
-        include: "image,uid",
+        "fields[node--case_study]": "title,description,path,image,uid,created,source_organization,copyright_year,teaches",
+        "fields[node--organization]": "title,logo",
+        include: "image,uid,source_organization,source_organization.logo,source_organization.logo.image",
         sort: "-created",
       },
     }

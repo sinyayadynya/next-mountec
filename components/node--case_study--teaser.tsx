@@ -26,7 +26,7 @@ export function NodeCaseStudyTeaser({ node, ...props }: NodeCaseStudyTeaserProps
                 <Border className="grid grid-cols-3 gap-x-8 gap-y-8 pt-16">
                     <div className="col-span-full sm:flex sm:items-center sm:justify-between sm:gap-x-8 lg:col-span-1 lg:block">
                         <div className="sm:flex sm:items-center sm:gap-x-6 lg:block">
-                            {/* {node.source_organization?.logo[2]?.image} */}
+
                             <Image
                                 src={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${node.source_organization.logo[2].image.uri.url}`}
                                 alt={node.source_organization.logo[2].image.resourceIdObjMeta.alt}
@@ -92,35 +92,6 @@ export function NodeCaseStudyTeaser({ node, ...props }: NodeCaseStudyTeaserProps
                                 </div>
                             );
                         })}
-
-
-
-
-                        {/* {node.subject_of && node.subject_of.length > 0 && (
-                            <div>
-                                {node.subject_of.map((recommendation, i) => (
-                                <Blockquote
-                                    key={i}
-                                    author={{
-                                    name: recommendation.author ? recommendation.author.title : '',
-                                    role: 'Role of the person' // replace this with the actual role
-                                    }}
-                                >
-                                    {recommendation.text.processed}
-                                </Blockquote>
-                                ))}
-                            </div>
-                        )} */}
-
-
-                        {/* {caseStudy.testimonial && (
-                            <Blockquote
-                                author={caseStudy.testimonial.author}
-                                className="mt-12"
-                            >
-                            {caseStudy.testimonial.content}
-                            </Blockquote>
-                        )} */}
 
                     </div>
 

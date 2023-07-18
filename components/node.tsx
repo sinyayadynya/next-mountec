@@ -33,6 +33,7 @@ export const RESOURCE_INCLUDES = {
         "uid,about,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",
     "node--article": "uid,image,keywords,author,author.uid,author.image",
     "node--case_study": "uid,image,image.uid,image.thumbnail,image.image,keywords,author,author.uid,author.image,source_organization,source_organization.uid,source_organization.title,copyright_year,teaches,is_based_on,about,about.name,about.variable_measured,subject_of,has_part",
+    "node--case_study--card": "uid,image,image.uid,image.thumbnail,image.image,keywords,author,author.uid,author.image,source_organization,source_organization.uid,source_organization.title,copyright_year,teaches,is_based_on",
     "node--case_study--teaser": "uid,image,image.uid,image.thumbnail,image.image,keywords,author,author.uid,author.image,source_organization,source_organization.uid,source_organization.title,copyright_year,teaches,is_based_on,about,about.name,about.variable_measured,subject_of",
     "node--contact_page":
         "uid,primary_image_of_page,primary_image_of_page.uid,primary_image_of_page.thumbnail,primary_image_of_page.image",

@@ -106,8 +106,6 @@ if (type === 'node--case_study') {
       .addFields('paragraph--data_catalog', ['dataset']); // Include the dataset field in the fields for the data_catalog entity
 }
 
-
-
   if (type === 'node--organization') {
     params
     .addInclude(['logo.image'])
