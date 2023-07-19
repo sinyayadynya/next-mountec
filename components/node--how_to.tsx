@@ -2,7 +2,7 @@ import { DrupalNode } from "next-drupal";
 import { FormattedText } from "components/formatted-text";
 import { DrupalEntity } from "components/entity";
 import { DrupalJsonApiParams } from "drupal-jsonapi-params";
-import { drupal } from "lib/drupal";
+
 
 import { ContactSection } from 'components/ContactSection'
 import { Container } from 'components/Container'
@@ -30,7 +30,7 @@ async function fetchImage(id) {
 }
 
 interface NodeHowToProps {
-    node: DrupalNode;
+  node: DrupalNode;
 }
 
 function Section({ title, image, children }) {
@@ -93,68 +93,7 @@ function StepType3({ data }) {
     );
 }
 
-// function Values() {
-//     return (
-//       <div className="relative mt-24 pt-24 sm:mt-32 sm:pt-32 lg:mt-40 lg:pt-40">
-//         <div className="absolute inset-x-0 top-0 -z-10 h-[884px] overflow-hidden rounded-t-4xl bg-gradient-to-b from-neutral-50">
-//           <GridPattern
-//             className="absolute inset-0 h-full w-full fill-neutral-100 stroke-neutral-950/5 [mask-image:linear-gradient(to_bottom_left,white_40%,transparent_50%)]"
-//             yOffset={-270}
-//           />
-//         </div>
-
-//         <SectionIntro
-//           eyebrow="Our values"
-//           title="Balancing reliability and innovation"
-//         >
-//           <p>
-//             We strive to stay at the forefront of emerging trends and
-//             technologies, while completely ignoring them and forking that old
-//             Rails project we feel comfortable using. We stand by our core values
-//             to justify that decision.
-//           </p>
-//         </SectionIntro>
-
-//         <Container className="mt-24">
-//           <GridList>
-//             <GridListItem title="Meticulous">
-//               The first part of any partnership is getting our designer to put
-//               your logo in our template. The second step is getting them to do the
-//               colors.
-//             </GridListItem>
-//             <GridListItem title="Efficient">
-//               We pride ourselves on never missing a deadline which is easy because
-//               most of the work was done years ago.
-//             </GridListItem>
-//             <GridListItem title="Adaptable">
-//               Every business has unique needs and our greatest challenge is
-//               shoe-horning those needs into something we already built.
-//             </GridListItem>
-//             <GridListItem title="Honest">
-//               We are transparent about all of our processes, banking on the simple
-//               fact our clients never actually read anything.
-//             </GridListItem>
-//             <GridListItem title="Loyal">
-//               We foster long-term relationships with our clients that go beyond
-//               just delivering a product, allowing us to invoice them for decades.
-//             </GridListItem>
-//             <GridListItem title="Innovative">
-//               The technological landscape is always evolving and so are we. We are
-//               constantly on the lookout for new open source projects to clone.
-//             </GridListItem>
-//           </GridList>
-//         </Container>
-//       </div>
-//     )
-// }
-
-
-function Values({ block }) {
-    // If the block data hasn't loaded yet, don't render anything.
-    if (!block) {
-      return null;
-    }
-
+function Values() {
     return (
       <div className="relative mt-24 pt-24 sm:mt-32 sm:pt-32 lg:mt-40 lg:pt-40">
         <div className="absolute inset-x-0 top-0 -z-10 h-[884px] overflow-hidden rounded-t-4xl bg-gradient-to-b from-neutral-50">
@@ -165,75 +104,51 @@ function Values({ block }) {
         </div>
 
         <SectionIntro
-          eyebrow={block.info}
-          title={block.alternate_name[0]}
+          eyebrow="Our values"
+          title="Balancing reliability and innovation"
         >
-          <div dangerouslySetInnerHTML={{ __html: block.description.processed }} />
+          <p>
+            We strive to stay at the forefront of emerging trends and
+            technologies, while completely ignoring them and forking that old
+            Rails project we feel comfortable using. We stand by our core values
+            to justify that decision.
+          </p>
         </SectionIntro>
 
         <Container className="mt-24">
           <GridList>
-          {block.item_list_element.map((item, index) => {
-                // Parse the item's value as HTML.
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(item.value, 'text/html');
-
-                // The title is the text content of the first <strong> element.
-                let title = doc.querySelector('strong').textContent;
-
-                // Remove the period at the end of the title.
-                if (title.endsWith('.')) {
-                    title = title.slice(0, -1);
-                }
-
-                // The description is the text content of the <p> element, without the title.
-                let description = doc.querySelector('p').textContent.replace(title, '');
-
-                // Remove the period at the start of the description.
-                if (description.startsWith('.')) {
-                    description = description.slice(1);
-                }
-
-                // Trim the description to remove leading and trailing spaces.
-                description = description.trim();
-
-                return (
-                    <GridListItem key={index} title={title}>
-                    {description}
-                    </GridListItem>
-                );
-            })}
-
-
-
-
+            <GridListItem title="Meticulous">
+              The first part of any partnership is getting our designer to put
+              your logo in our template. The second step is getting them to do the
+              colors.
+            </GridListItem>
+            <GridListItem title="Efficient">
+              We pride ourselves on never missing a deadline which is easy because
+              most of the work was done years ago.
+            </GridListItem>
+            <GridListItem title="Adaptable">
+              Every business has unique needs and our greatest challenge is
+              shoe-horning those needs into something we already built.
+            </GridListItem>
+            <GridListItem title="Honest">
+              We are transparent about all of our processes, banking on the simple
+              fact our clients never actually read anything.
+            </GridListItem>
+            <GridListItem title="Loyal">
+              We foster long-term relationships with our clients that go beyond
+              just delivering a product, allowing us to invoice them for decades.
+            </GridListItem>
+            <GridListItem title="Innovative">
+              The technological landscape is always evolving and so are we. We are
+              constantly on the lookout for new open source projects to clone.
+            </GridListItem>
           </GridList>
         </Container>
       </div>
-    );
+    )
   }
 
-
-
 export function NodeHowTo({ node, ...props }: NodeHowToProps) {
-      // Define a state variable to hold your block data
-      const [block, setBlock] = useState(null);
-
-      useEffect(() => {
-        async function fetchBlock() {
-          const blockData = await drupal.getResource(
-            "block_content--item_list",
-            "060d7acb-6265-43ab-8212-5ce64bc017a9"
-          );
-          setBlock(blockData);
-        }
-
-        fetchBlock();
-      }, []);
-
-      // Now you can use the block data in your component
-      console.log(block);
-
     return (
         <>
             <article {...props}>
@@ -271,25 +186,7 @@ export function NodeHowTo({ node, ...props }: NodeHowToProps) {
 
             </article>
 
-            {/* {block && (
-                <div>
-                <h2>{block.info}</h2>
-                <div dangerouslySetInnerHTML={{ __html: block.description.processed }} />
-                {block.item_list_element.map((item, index) => (
-                    <div key={index} dangerouslySetInnerHTML={{ __html: item.processed }} />
-                ))}
-                </div>
-            )} */}
-
-            {/* {node.main_entity && (
-
-                <div className="mb-4">
-                    <pre>{JSON.stringify(node.main_entity, null, 2)}</pre>
-                </div>
-            )} */}
-
-            <Values block={block} />
-
+            <Values />
 
             <ContactSection />
         </>

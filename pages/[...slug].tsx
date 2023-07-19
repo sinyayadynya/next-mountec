@@ -118,10 +118,9 @@ if (type === 'node--case_study') {
 
   if (type === 'node--how_to') {
     params
-      .addInclude(['step', 'main_entity'])
-      .addFields('paragraph--how_to_step', ['name', 'description', 'image'])
-      .addFields('paragraph--block', ['name', 'alternate_name', 'text', 'item_list_element']);
-}
+      .addInclude(['step'])
+      .addFields('paragraph--how_to_step', ['name', 'description', 'image']);
+  }
 
   if (type === 'node--person') {
     params.addInclude(['image.image']);
