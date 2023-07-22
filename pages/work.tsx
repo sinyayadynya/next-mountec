@@ -2,6 +2,7 @@ import Head from "next/head"
 import Image from 'next/image'
 import { GetStaticPropsResult } from "next"
 import { DrupalNode } from "next-drupal"
+import { FormattedText } from "components/formatted-text";
 
 import { drupal } from "lib/drupal"
 import { RootLayout } from "components/RootLayout"
@@ -68,8 +69,8 @@ interface IndexPageProps {
   nodes: DrupalNode[]
 }
 
-export default function IndexPage({ nodes }: IndexPageProps) {
-  return (
+export default function workPage({ pageNode, caseStudyNodes }) {
+    return (
     <RootLayout>
       <Head>
         <title>Mountec Corp</title>
@@ -79,11 +80,12 @@ export default function IndexPage({ nodes }: IndexPageProps) {
         />
       </Head>
       <div className='mx-auto max-w-7xl px-6 lg:px-8 mt-24 sm:mt-32 lg:mt-40'>
-        <PageIntro eyebrow="Our work" title="Proven solutions for real-world problems.">
-            <p>
-            We believe in efficiency and maximizing our resources to provide the best value to our clients.
-            The primary way we do that is by re-using the same five projects we’ve been developing for the past decade.
-            </p>
+        <PageIntro eyebrow={pageNode.title} title={pageNode.headline}>
+            {pageNode.description?.processed && (
+            <div>
+                <FormattedText processed={pageNode.description.processed} />
+            </div>
+        )}
         </PageIntro>
 
         <Container className="mt-40">
@@ -93,17 +95,15 @@ export default function IndexPage({ nodes }: IndexPageProps) {
                 </h2>
             </FadeIn>
             <div className="mt-10 space-y-20 sm:space-y-24 lg:space-y-32">
-
-                {nodes?.length ? (
-                    nodes.map((node) => (
-                        <div key={node.id}>
-                            <NodeCaseStudyTeaser node={node} />
-                        </div>
-                    ))
-                    ) : (
-                    <p className="py-4">No nodes found</p>
+                {caseStudyNodes?.length ? (
+                caseStudyNodes.map((node) => (
+                    <div key={node.id}>
+                    <NodeCaseStudyTeaser node={node} />
+                    </div>
+                ))
+                ) : (
+                <p className="py-4">No nodes found</p>
                 )}
-
             </div>
 
         </Container>
@@ -127,28 +127,37 @@ export default function IndexPage({ nodes }: IndexPageProps) {
 }
 
 
+
 export async function getStaticProps(
     context
   ): Promise<GetStaticPropsResult<IndexPageProps>> {
-    const nodes = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
+    // Fetch the page node from Drupal.
+    const pageNode = await drupal.getResource(
+      "node--page",
+      "9dc37850-e381-4e20-ae2a-70aef57fd4f8"
+    )
+
+    // Fetch the case study nodes from Drupal.
+    const caseStudyNodes = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
       "node--case_study",
       context,
       {
         params: {
-            "filter[status]": 1,
-            "fields[node--case_study]": "title,description,path,image,uid,created,source_organization,copyright_year,teaches,subject_of,has_part",
-            "fields[node--organization]": "title,logo",
-            "fields[node--recommendation]": "author,text",
-            "fields[node--person]": "title,job_title",
-            include: "image,uid,source_organization,source_organization.logo,source_organization.logo.image,subject_of,subject_of.author",
-            sort: "-created",
-          },
+          "filter[status]": 1,
+          "fields[node--case_study]": "title,description,path,image,uid,created,source_organization,copyright_year,teaches,subject_of,has_part",
+          "fields[node--organization]": "title,logo",
+          "fields[node--recommendation]": "author,text",
+          "fields[node--person]": "title,job_title",
+          include: "image,uid,source_organization,source_organization.logo,source_organization.logo.image,subject_of,subject_of.author",
+          sort: "-created",
+        },
       }
     )
 
     return {
       props: {
-        nodes,
+        pageNode,
+        caseStudyNodes,
       },
     }
   }
