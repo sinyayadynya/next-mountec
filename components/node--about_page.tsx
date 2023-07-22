@@ -106,11 +106,9 @@ function Team({ team }) {
         </div>
       </Container>
     )
-  }
+}
 
-
-
-  export function NodeAboutPage({ node, ...props }: NodePageProps) {
+export function NodeAboutPage({ node, ...props }: NodePageProps) {
     const [team, setTeam] = useState([]);
     const [blogArticles, setBlogArticles] = useState([]);
 
@@ -163,9 +161,9 @@ function Team({ team }) {
 
         <Container className="mt-16">
             <StatList>
-            <StatListItem value="35" label="Underpaid employees" />
-            <StatListItem value="52" label="Placated clients" />
-            <StatListItem value="$25M" label="Invoices billed" />
+                <StatListItem value="35" label="Underpaid employees" />
+                <StatListItem value="52" label="Placated clients" />
+                <StatListItem value="$25M" label="Invoices billed" />
             </StatList>
         </Container>
 
