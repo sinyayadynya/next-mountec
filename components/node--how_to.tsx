@@ -160,7 +160,7 @@ export function NodeHowTo({ node, ...props }: NodeHowToProps) {
                     )}
                     {node.text?.processed && (
                         <div className="mt-10 max-w-2xl space-y-6 text-base">
-                        <FormattedText processed={node.text.processed} />
+                            <FormattedText processed={node.text.processed} />
                         </div>
                     )}
                 </PageIntro>
