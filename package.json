@@ -7,7 +7,7 @@
     "drupal-jsonapi-params": "^2.2.0",
     "focus-visible": "^5.2.0",
     "framer-motion": "^10.12.21",
-    "html-react-parser": "^1.4.8",
+    "html-react-parser": "^1.4.14",
     "i18next": "^23.2.8",
     "next": "^13",
     "next-drupal": "^1.6.0",
