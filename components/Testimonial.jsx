@@ -5,7 +5,7 @@ import { Container } from 'components/Container'
 import { FadeIn } from 'components/FadeIn'
 import { GridPattern } from 'components/GridPattern'
 
-export function Testimonial({ children, client, className }) {
+export function Testimonial({ children, client, className, imageWidth, imageHeight }) {
   return (
     <div
       className={clsx(
@@ -26,7 +26,7 @@ export function Testimonial({ children, client, className }) {
               </p>
             </blockquote>
             <figcaption className="mt-10">
-              <Image src={client.logo} alt={client.name} unoptimized />
+              <Image src={client.logo} alt={client.name} width={imageWidth} height={imageHeight} unoptimized />
             </figcaption>
           </figure>
         </FadeIn>
