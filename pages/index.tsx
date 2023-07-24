@@ -2,6 +2,7 @@ import Head from "next/head"
 import Image from 'next/image'
 import { GetStaticPropsResult } from "next"
 import { DrupalNode } from "next-drupal"
+import { useEffect, useState } from 'react'
 
 import { drupal } from "lib/drupal"
 import { RootLayout } from "components/RootLayout"
@@ -13,7 +14,7 @@ import { FadeIn, FadeInStagger } from 'components/FadeIn'
 import { List, ListItem } from 'components/List'
 import { SectionIntro } from 'components/SectionIntro'
 import { StylizedImage } from 'components/StylizedImage'
-import { Testimonial } from 'components/Testimonial'
+import { Testimonial as TestimonialComponent } from 'components/Testimonial'
 
 import logoBrightPath from 'images/clients/bright-path/logo-light.svg'
 import logoFamilyFund from 'images/clients/family-fund/logo-light.svg'
@@ -25,9 +26,11 @@ import logoPhobiaDark from 'images/clients/phobia/logo-dark.svg'
 import logoPhobiaLight from 'images/clients/phobia/logo-light.svg'
 import logoUnseal from 'images/clients/unseal/logo-light.svg'
 import imageServices from 'images/services.jpg'
+import { FormattedText } from "components/formatted-text"
 
 interface IndexPageProps {
   nodes: DrupalNode[]
+  homeContent: DrupalNode
 }
 
 const clients = [
@@ -67,59 +70,6 @@ function Clients() {
           </FadeInStagger>
         </Container>
       </div>
-    )
-}
-
-function CaseStudies({ caseStudies }) {
-    return (
-      <>
-        <SectionIntro
-          title="Harnessing technology for a brighter future"
-          className="mt-24 sm:mt-32 lg:mt-40"
-        >
-          <p>
-            We believe technology is the answer to the world’s greatest
-            challenges. It’s also the cause, so we find ourselves in bit of a
-            catch 22 situation.
-          </p>
-        </SectionIntro>
-        <Container className="mt-16">
-          <FadeInStagger className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            {caseStudies.map((caseStudy) => (
-              <FadeIn key={caseStudy.href} className="flex">
-                <article className="relative flex w-full flex-col rounded-3xl p-6 ring-1 ring-neutral-950/5 transition hover:bg-neutral-50 sm:p-8">
-                  <h3>
-                    <Link href={caseStudy.href}>
-                      <span className="absolute inset-0 rounded-3xl" />
-                      <Image
-                        src={caseStudy.logo}
-                        alt={caseStudy.client}
-                        className="h-16 w-16"
-                        unoptimized
-                      />
-                    </Link>
-                  </h3>
-                  <p className="mt-6 flex gap-x-2 text-sm text-neutral-950">
-                    <time dateTime={caseStudy.year} className="font-semibold">
-                      {caseStudy.date.split('-')[0]}
-                    </time>
-                    <span className="text-neutral-300" aria-hidden="true">
-                      /
-                    </span>
-                    <span>Case study</span>
-                  </p>
-                  <p className="mt-6 font-display text-2xl font-semibold text-neutral-950">
-                    {caseStudy.title}
-                  </p>
-                  <p className="mt-4 text-base text-neutral-600">
-                    {caseStudy.description}
-                  </p>
-                </article>
-              </FadeIn>
-            ))}
-          </FadeInStagger>
-        </Container>
-      </>
     )
 }
 
@@ -174,13 +124,51 @@ function Services() {
     )
 }
 
+function Testimonial({ className }) {
+    const [testimonial, setTestimonial] = useState(null)
+
+    useEffect(() => {
+      const fetchTestimonial = async () => {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/api/testimonials/random`)
+          const data = await response.json()
+          setTestimonial(data[0])
+        } catch (error) {
+          console.error('Failed to fetch testimonial:', error)
+        }
+      }
+
+      fetchTestimonial()
+    }, [])
+
+    if (!testimonial) {
+      return null // or a loading spinner
+    }
+
+    // Remove HTML tags from the title to use as alt text
+    const altText = testimonial.title.replace(/<[^>]*>?/gm, '')
+
+    return (
+      <TestimonialComponent
+        className={className}
+        client={{ name: altText, logo: `${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}${testimonial.logo}` }}
+        imageWidth={184} // placeholder width
+        imageHeight={36} // placeholder height
+      >
+        {testimonial.text}
+      </TestimonialComponent>
+    )
+  }
+
 export const metadata = {
     description:
       'We are developer studio working at the intersection of design and technology.',
 }
 
-export default function IndexPage({ nodes }: IndexPageProps) {
-  return (
+export default function IndexPage({ nodes, homeContent }: IndexPageProps) {
+    console.log(homeContent.offers);
+
+    return (
     <RootLayout>
       <Head>
         <title>Mountec Corp</title>
@@ -190,28 +178,27 @@ export default function IndexPage({ nodes }: IndexPageProps) {
         />
       </Head>
 
-        <Container className="mt-24 sm:mt-32 md:mt-56">
+      <Container className="mt-24 sm:mt-32 md:mt-56">
             <FadeIn className="max-w-3xl">
                 <h1 className="font-display text-5xl font-medium tracking-tight text-neutral-950 [text-wrap:balance] sm:text-7xl">
-                    Pioneers <br />in sustainable territorial <br />development.
+                    {homeContent.headline}
                 </h1>
-                <p className="mt-6 text-xl text-neutral-600">
-                    Sculpting landscapes, shaping futures. We fuse innovation and sustainability with local dynamics, laying the groundwork for future-ready tourism.
-                </p>
+                <div className="mt-6 text-xl text-neutral-600">
+                    <FormattedText processed={homeContent.description.processed} />
+                </div>
             </FadeIn>
         </Container>
+
 
         <Clients />
 
         <div>
             <SectionIntro
-                title="Building sustainable destinations for future generations"
+                title={homeContent.alternative_headline}
                 className="mt-24 sm:mt-32 lg:mt-40"
             >
-                <p>
-                We see tourism as the key to fostering socio-economic growth and environmental conservation.
-                It's a delicate balance, but then again, so is skiing on a steep slope.
-                </p>
+                <FormattedText processed={homeContent.description.processed} />
+
             </SectionIntro>
 
             <Container className="mt-16">
@@ -231,13 +218,7 @@ export default function IndexPage({ nodes }: IndexPageProps) {
 
         {/* <CaseStudies caseStudies={caseStudies} /> */}
 
-        <Testimonial
-            className="mt-24 sm:mt-32 lg:mt-40"
-            client={{ name: 'Phobia', logo: logoPhobiaDark }}
-        >
-            Partnering with Mountec Corp. was an absolute game-changer for our local tourism sector.
-            Their innovative, sustainable approach has made a significant, positive impact on our community.
-        </Testimonial>
+        <Testimonial className="mt-24 sm:mt-32 lg:mt-40" />
 
         <Services />
 
@@ -248,25 +229,34 @@ export default function IndexPage({ nodes }: IndexPageProps) {
 }
 
 export async function getStaticProps(
-  context
-): Promise<GetStaticPropsResult<IndexPageProps>> {
-  const nodes = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
-    "node--case_study",
-    context,
-    {
-      params: {
-        "filter[status]": 1,
-        "fields[node--case_study]": "title,description,path,image,uid,created,source_organization,copyright_year,teaches",
-        "fields[node--organization]": "title,logo",
-        include: "image,uid,source_organization,source_organization.logo,source_organization.logo.image",
-        sort: "-created",
-      },
-    }
-  )
+    context
+  ): Promise<GetStaticPropsResult<IndexPageProps>> {
+    const nodes = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
+      "node--case_study",
+      context,
+      {
+        params: {
+          "filter[status]": 1,
+          "fields[node--case_study]": "title,description,path,image,uid,created,source_organization,copyright_year,teaches",
+          "fields[node--organization]": "title,logo",
+          include: "image,uid,source_organization,source_organization.logo,source_organization.logo.image",
+          sort: "-created",
+        },
+      }
+    )
 
-  return {
-    props: {
-      nodes,
-    },
-  }
+    const homeContent = await drupal.getResource(
+      "node--page",
+      "456f8965-1cf5-40c8-85c7-ad2bc47f4792"
+    )
+
+    console.log('homeContent:', homeContent)
+
+    return {
+      props: {
+        nodes,
+        homeContent,
+      },
+      revalidate: 60, // revalidate every 60 seconds
+    }
 }
