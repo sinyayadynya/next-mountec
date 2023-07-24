@@ -146,7 +146,7 @@ function Values() {
         </Container>
       </div>
     )
-  }
+}
 
 export function NodeHowTo({ node, ...props }: NodeHowToProps) {
     return (
