@@ -1,3 +1,5 @@
+// ./pages/work.tsx
+
 import Head from "next/head"
 import Image from 'next/image'
 import { GetStaticPropsResult } from "next"
@@ -110,6 +112,7 @@ export default function workPage({ pageNode, caseStudyNodes }) {
 
       </div>
 
+      {/* To make dynamic */}
         <Testimonial
             className="mt-24 sm:mt-32 lg:mt-40"
             client={{ name: 'Mail Smirk', logo: logoMailSmirk }}

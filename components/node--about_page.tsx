@@ -1,3 +1,5 @@
+// ./components/node--about_page.tsx
+
 import { DrupalNode } from "next-drupal";
 import { FormattedText } from "components/formatted-text";
 import { DrupalEntity } from "components/entity";
@@ -16,10 +18,30 @@ import { StatList, StatListItem } from 'components/StatList'
 import { drupal } from 'lib/drupal'
 import { useEffect, useState } from 'react';
 
+const aboutCultureSerializer = require("../lib/serializers/aboutCultureSerializer");
 
-interface NodePageProps {
-  node: DrupalNode;
-}
+
+
+interface NodeAboutPageProps {
+    node: DrupalNode;
+    data: any; // or replace 'any' with the specific type of your serialized data
+  }
+
+  export async function getStaticProps() {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/jsonapi/node/about_page`);
+    const data = await response.json();
+
+    const serializedAboutPage = aboutCultureSerializer.serialize(data);
+
+    return {
+      props: {
+        data: serializedAboutPage,
+      },
+      revalidate: 60 // Set revalidation time as needed
+    };
+  }
+
+
 
 export const metadata = {
     title: 'About Us',
@@ -27,37 +49,30 @@ export const metadata = {
       'We believe that our strength lies in our collaborative approach, which puts our clients at the center of everything we do.',
 }
 
-function Culture() {
+function Culture({ data }) {
+    console.log("Culture data:", data);
+
     return (
       <div className="mt-24 rounded-4xl bg-neutral-950 py-24 sm:mt-32 lg:mt-40 lg:py-32">
         <SectionIntro
-          eyebrow="Our culture"
-          title="Balance your passion with your passion for life."
+          eyebrow={data?.label}
+          title={data?.alternate_name}
           invert
         >
-          <p>
-            We are a group of like-minded people who share the same core values.
-          </p>
+          <p>{data?.body}</p>
         </SectionIntro>
         <Container className="mt-16">
           <GridList>
-            <GridListItem title="Loyalty" invert>
-              Our team has been with us since the beginning because none of them
-              are allowed to have LinkedIn profiles.
-            </GridListItem>
-            <GridListItem title="Trust" invert>
-              We don’t care when our team works just as long as they are working
-              every waking second.
-            </GridListItem>
-            <GridListItem title="Compassion" invert>
-              You never know what someone is going through at home and we make
-              sure to never find out.
-            </GridListItem>
+            {data?.item_list_element?.map((item, index) => (
+              <GridListItem key={index} title={item.item} invert>
+                {item?.description}
+              </GridListItem>
+            ))}
           </GridList>
         </Container>
       </div>
-    )
-}
+    );
+  }
 
 function Team({ team }) {
     return (
@@ -108,7 +123,11 @@ function Team({ team }) {
     )
 }
 
-export function NodeAboutPage({ node, ...props }: NodePageProps) {
+export function NodeAboutPage({ node, data: { data } }: NodeAboutPageProps) {
+
+// export function NodeAboutPage({ node: { data: node }, data: { data } }: NodeAboutPageProps) {
+
+
     const [team, setTeam] = useState([]);
     const [blogArticles, setBlogArticles] = useState([]);
 
@@ -144,8 +163,7 @@ export function NodeAboutPage({ node, ...props }: NodePageProps) {
     }, []);
 
     return (
-    <article {...props}>
-
+    <article>
         <PageIntro eyebrow={node.title} title={node.headline}>
             {node.description?.processed && (
                 <div>
@@ -167,7 +185,9 @@ export function NodeAboutPage({ node, ...props }: NodePageProps) {
             </StatList>
         </Container>
 
-        <Culture />
+
+
+        <Culture data={data} />
 
 
         <Team team={team} />

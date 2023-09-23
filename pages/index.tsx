@@ -73,6 +73,8 @@ function Clients() {
     )
 }
 
+// To make dynamic
+
 function Services() {
     return (
       <>
