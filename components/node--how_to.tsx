@@ -95,7 +95,7 @@ function StepType1({ data }) {
     return (
         <Section title={data.name} image={{ src: processStep1 }}>
             <div className="space-y-6 text-base text-neutral-600 [&>ul]:mt-4 [&>ul]:flex [&>ul]:flex-wrap [&>ul>:gap-4 [&>ul>li]:rounded-full [&>ul>li]:bg-neutral-100 [&>ul>li]:px-4 [&>ul>li]:py-1.5 [&>ul>li]:text-base [&>ul>li]:text-neutral-600 [&>h3]:mt-12 [&>h3]:font-display [&>h3]:text-base [&>h3]:font-semibold [&>h3]:text-neutral-950">
-                <FormattedText processed={data.description.processed} />
+                {/* <FormattedText processed={data.description.processed} /> */}
             </div>
         </Section>
     );
@@ -105,7 +105,7 @@ function StepType2({ data }) {
     return (
         <Section title={data.name} image={{ src: processStep2, shape: 1 }}>
             <div className="space-y-6 text-base text-neutral-600 [&>ul]:mt-4 [&>ul]:flex [&>ul]:flex-wrap [&>ul]:gap-4 [&>ul>li]:rounded-full [&>ul>li]:bg-neutral-100 [&>ul>li]:px-4 [&>ul>li]:py-1.5 [&>ul>li]:text-base [&>ul>li]:text-neutral-600 [&>h3]:mt-12 [&>h3]:font-display [&>h3]:text-base [&>h3]:font-semibold [&>h3]:text-neutral-950">
-                <FormattedText processed={data.description.processed} />
+                {/* <FormattedText processed={data.description.processed} /> */}
             </div>
         </Section>
     );
@@ -115,7 +115,7 @@ function StepType3({ data }) {
     return (
         <Section title={data.name} image={{ src: processStep3, shape: 2 }}>
             <div className="space-y-6 text-base text-neutral-600 [&>ul]:mt-4 [&>ul]:flex [&>ul]:flex-wrap [&>ul]:gap-4 [&>ul>li]:rounded-full [&>ul>li]:bg-neutral-100 [&>ul>li]:px-4 [&>ul>li]:py-1.5 [&>ul>li]:text-base [&>ul>li]:text-neutral-600 [&>h3]:mt-12 [&>h3]:font-display [&>h3]:text-base [&>h3]:font-semibold [&>h3]:text-neutral-950">
-                <FormattedText processed={data.description.processed} />
+                {/* <FormattedText processed={data.description.processed} /> */}
             </div>
         </Section>
     );
@@ -177,12 +177,12 @@ export function NodeHowTo({ node, howToData, ...props }: NodeHowToProps) {
                 <PageIntro eyebrow={node.title} title={node.headline}>
                     {node.description?.processed && (
                         <div>
-                        <FormattedText processed={node.description.processed} />
+                            <FormattedText processed={node.description.processed} />
                         </div>
                     )}
                     {node.text?.processed && (
                         <div className="mt-10 max-w-2xl space-y-6 text-base">
-                        <FormattedText processed={node.text.processed} />
+                            <FormattedText processed={node.text.processed} />
                         </div>
                     )}
                 </PageIntro>
