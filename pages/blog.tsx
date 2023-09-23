@@ -21,7 +21,7 @@ export default function IndexPage({ nodes }: IndexPageProps) {
         <title>Mountec Corp</title>
         <meta
           name="description"
-          content="A Next.js site powered by a Drupal backend."
+          content="Blog - The latest articles and news"
         />
       </Head>
       <div className='mx-auto max-w-7xl px-6 lg:px-8 mt-24 sm:mt-32 lg:mt-40'>

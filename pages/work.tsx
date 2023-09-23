@@ -80,7 +80,7 @@ export default function workPage({ pageNode, caseStudyNodes }) {
         <title>Mountec Corp</title>
         <meta
           name="description"
-          content="A Next.js site powered by a Drupal backend."
+          content="Our work - Proven solutions for real-world problems."
         />
       </Head>
       <div className='mx-auto max-w-7xl px-6 lg:px-8 mt-24 sm:mt-32 lg:mt-40'>

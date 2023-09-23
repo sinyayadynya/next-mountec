@@ -23,8 +23,8 @@ export default function AboutPage({ node, data }) {
             <Head>
                 <title>Mountec Corp</title>
                 <meta
-                name="description"
-                content="A Next.js site powered by a Drupal backend."
+                    name="description"
+                    content="About us - Our strength is collaboration"
                 />
             </Head>
 

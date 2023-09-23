@@ -176,7 +176,7 @@ export default function IndexPage({ nodes, homeContent }: IndexPageProps) {
         <title>Mountec Corp</title>
         <meta
           name="description"
-          content="A Next.js site powered by a Drupal backend."
+          content="Pioneers in sustainable territorial development."
         />
       </Head>
 
