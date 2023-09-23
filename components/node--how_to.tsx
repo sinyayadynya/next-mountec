@@ -41,22 +41,41 @@ interface NodeHowToProps {
 
 const client = new DrupalClient(process.env.NEXT_PUBLIC_DRUPAL_BASE_URL);
 
-
 export async function getStaticProps() {
-    const howToData = await client.getResourceCollection("/jsonapi/node/how_to")
+    const howToData = await client.getResourceCollection("/jsonapi/node/how_to");
+
+    // Manually apply the custom serializer to the 'how_to_step' paragraphs
+    const serializedHowToData = howToData.map((node) => {
+      if (node.type === 'paragraph--how_to_step') {
+        return HowToStepSerializer(node);
+      }
+      return node;
+    });
 
     return {
       props: {
-        howToData,
+        howToData: serializedHowToData,
       },
       revalidate: 60 // Set revalidation time as needed
-    }
-}
-
-interface NodeHowToProps {
-    node: DrupalNode;
-    howToData: any; // You can replace 'any' with the specific type if known
+    };
   }
+
+
+// export async function getStaticProps() {
+//     const howToData = await client.getResourceCollection("/jsonapi/node/how_to")
+
+//     return {
+//       props: {
+//         howToData,
+//       },
+//       revalidate: 60 // Set revalidation time as needed
+//     }
+// }
+
+// interface NodeHowToProps {
+//     node: DrupalNode;
+//     howToData: any; // You can replace 'any' with the specific type if known
+//   }
 
 
 
@@ -93,9 +112,10 @@ function Section({ title, image, children }) {
 
 function StepType1({ data }) {
     return (
-        <Section title={data.name} image={{ src: processStep1 }}>
+        <Section title={data.schemaName} image={{ src: processStep1 }}>
             <div className="space-y-6 text-base text-neutral-600 [&>ul]:mt-4 [&>ul]:flex [&>ul]:flex-wrap [&>ul>:gap-4 [&>ul>li]:rounded-full [&>ul>li]:bg-neutral-100 [&>ul>li]:px-4 [&>ul>li]:py-1.5 [&>ul>li]:text-base [&>ul>li]:text-neutral-600 [&>h3]:mt-12 [&>h3]:font-display [&>h3]:text-base [&>h3]:font-semibold [&>h3]:text-neutral-950">
                 {/* <FormattedText processed={data.description.processed} /> */}
+                {data.schemaDescription}
             </div>
         </Section>
     );
@@ -103,9 +123,10 @@ function StepType1({ data }) {
 
 function StepType2({ data }) {
     return (
-        <Section title={data.name} image={{ src: processStep2, shape: 1 }}>
+        <Section title={data.schemaName} image={{ src: processStep2, shape: 1 }}>
             <div className="space-y-6 text-base text-neutral-600 [&>ul]:mt-4 [&>ul]:flex [&>ul]:flex-wrap [&>ul]:gap-4 [&>ul>li]:rounded-full [&>ul>li]:bg-neutral-100 [&>ul>li]:px-4 [&>ul>li]:py-1.5 [&>ul>li]:text-base [&>ul>li]:text-neutral-600 [&>h3]:mt-12 [&>h3]:font-display [&>h3]:text-base [&>h3]:font-semibold [&>h3]:text-neutral-950">
                 {/* <FormattedText processed={data.description.processed} /> */}
+                {data.schemaDescription}
             </div>
         </Section>
     );
@@ -113,9 +134,10 @@ function StepType2({ data }) {
 
 function StepType3({ data }) {
     return (
-        <Section title={data.name} image={{ src: processStep3, shape: 2 }}>
+        <Section title={data.schemaName} image={{ src: processStep3, shape: 2 }}>
             <div className="space-y-6 text-base text-neutral-600 [&>ul]:mt-4 [&>ul]:flex [&>ul]:flex-wrap [&>ul]:gap-4 [&>ul>li]:rounded-full [&>ul>li]:bg-neutral-100 [&>ul>li]:px-4 [&>ul>li]:py-1.5 [&>ul>li]:text-base [&>ul>li]:text-neutral-600 [&>h3]:mt-12 [&>h3]:font-display [&>h3]:text-base [&>h3]:font-semibold [&>h3]:text-neutral-950">
                 {/* <FormattedText processed={data.description.processed} /> */}
+                {data.schemaDescription}
             </div>
         </Section>
     );
