@@ -196,7 +196,6 @@ export default function IndexPage({ nodes, homeContent }: IndexPageProps) {
 
         <div>
             <SectionIntro
-                eyebrow
                 title={homeContent.alternative_headline}
                 className="mt-24 sm:mt-32 lg:mt-40"
             >

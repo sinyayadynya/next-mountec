@@ -1,16 +1,25 @@
-import clsx from 'clsx'
+import React, { ReactNode } from 'react';
+import clsx from 'clsx';
+import { Container } from 'components/Container';
+import { FadeIn } from 'components/FadeIn';
 
-import { Container } from 'components/Container'
-import { FadeIn } from 'components/FadeIn'
+interface SectionIntroProps {
+  eyebrow?: string;
+  title: string;
+  children?: ReactNode;
+  smaller?: boolean;
+  invert?: boolean;
+  [x: string]: any; // for additional props
+}
 
-export function SectionIntro({
+export const SectionIntro: React.FC<SectionIntroProps> = ({
   eyebrow,
   title,
   children,
   smaller = false,
   invert = false,
   ...props
-}) {
+}) => {
   return (
     <Container {...props}>
       <FadeIn className="max-w-2xl">
@@ -52,5 +61,5 @@ export function SectionIntro({
         )}
       </FadeIn>
     </Container>
-  )
-}
+  );
+};
