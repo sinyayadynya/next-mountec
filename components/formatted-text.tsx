@@ -24,12 +24,12 @@ const options: HTMLReactParserOptions = {
             <div className={className}>
               <Image
                 src={absoluteUrl(`/${src}`)}
-                width={`${width}px`}
-                height={`${height}px`}
+                width={parseInt(width, 10)}
+                height={parseInt(height, 10)}
                 alt={alt}
                 layout="intrinsic"
                 objectFit="cover"
-              />
+                />
             </div>
           );
         }

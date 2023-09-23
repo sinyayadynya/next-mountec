@@ -43,11 +43,29 @@ export default function NodePage({
 }
 
 export async function getStaticPaths(context): Promise<GetStaticPathsResult> {
-  return {
-    paths: await drupal.getStaticPathsFromContext(RESOURCE_TYPES, context),
-    fallback: "blocking",
+    const paths = await drupal.getStaticPathsFromContext(RESOURCE_TYPES, context);
+
+    // Exclude the conflicting paths
+    const filteredPaths = paths.filter(
+      (pathObj) => {
+        if (typeof pathObj === 'string') {
+          return !['/about', '/work', '/blog', '/'].includes(pathObj);
+        } else if (pathObj.params && pathObj.params.slug) {
+          const pathString = '/' + pathObj.params.slug.join('/');
+          return !['/about', '/work', '/blog', '/'].includes(pathString);
+        }
+        return true;
+      }
+    );
+
+    return {
+      paths: filteredPaths,
+      fallback: "blocking",
+    };
   }
-}
+
+
+
 
 export async function getStaticProps(
   context

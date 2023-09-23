@@ -62,9 +62,9 @@ function Culture({ data }) {
           <p>{data?.body}</p>
         </SectionIntro>
         <Container className="mt-16">
-          <GridList>
+          <GridList className="">
             {data?.item_list_element?.map((item, index) => (
-              <GridListItem key={index} title={item.item} invert>
+              <GridListItem key={index} title={item.item} invert className="">
                 {item?.description}
               </GridListItem>
             ))}

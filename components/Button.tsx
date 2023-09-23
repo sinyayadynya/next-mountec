@@ -1,6 +1,11 @@
 import Link from 'next/link'
 import clsx from 'clsx'
 
+interface ButtonProps {
+    invert?: boolean;
+    // other props
+}
+
 export function Button({ invert, href, className, children, ...props }) {
   className = clsx(
     className,

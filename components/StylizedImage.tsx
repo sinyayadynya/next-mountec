@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import Image from 'next/image'
+import Image, { type ImageProps } from 'next/image'
 import clsx from 'clsx'
 
 const shapes = [
@@ -20,7 +20,13 @@ const shapes = [
   },
 ]
 
-export function StylizedImage({ shape = 0, className, ...props }) {
+type ImagePropsWithOptionalAlt = Omit<ImageProps, 'alt'> & { alt?: string }
+
+export function StylizedImage({
+  shape = 0,
+  className,
+  ...props
+}: ImagePropsWithOptionalAlt & { shape?: 0 | 1 | 2 }) {
   let id = useId()
   let { width, height, path } = shapes[shape]
 
@@ -28,7 +34,7 @@ export function StylizedImage({ shape = 0, className, ...props }) {
     <div
       className={clsx(
         className,
-        'relative flex aspect-[719/680] w-full grayscale'
+        'relative flex aspect-[719/680] w-full grayscale',
       )}
     >
       <svg viewBox={`0 0 ${width} ${height}`} fill="none" className="h-full">

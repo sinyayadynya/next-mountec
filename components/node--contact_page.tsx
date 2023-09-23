@@ -150,7 +150,12 @@ function ContactForm() {
               </fieldset>
             </div>
           </div>
-          <Button type="submit" className="mt-10">
+          <Button
+            type="submit"
+            className="mt-10"
+            href="#"  // Add a placeholder or actual href
+            invert={false}  // or true, depending on your needs
+            >
             Let’s work together
           </Button>
         </form>
@@ -192,7 +197,7 @@ function ContactForm() {
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
                         Your message has been successfully dispatched into the digital realm.
-                        We've pinged your inbox with a confirmation for your records.
+                        We&apos;ve pinged your inbox with a confirmation for your records.
                     </p>
                   </div>
 
@@ -200,6 +205,9 @@ function ContactForm() {
                     <Button
                       type="button"
                       onClick={closeDialog}
+                      href="#"  // Add a placeholder or actual href
+                      className=""
+                        invert={false}  // or true, depending on your needs
                     >
                       Understood, thanks!
                     </Button>
@@ -223,7 +231,7 @@ function ContactDetails() {
           Our offices
         </h2>
         <p className="mt-6 text-base text-neutral-600">
-          Prefer doing things in person? We don’t but we have to list our
+          Prefer doing things in person? We don&apos;t but we have to list our
           addresses here for legal reasons.
         </p>
 
@@ -265,7 +273,7 @@ function ContactDetails() {
 
 export const metadata = {
     title: 'Contact Us',
-    description: 'Let’s work together. We can’t wait to hear from you.',
+    description: 'Let&apos;s work together. We can&apos;t wait to hear from you.',
 }
 
 export function NodeContactPage({ node, ...props }: NodeContactPageProps) {

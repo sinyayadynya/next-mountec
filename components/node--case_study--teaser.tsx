@@ -70,6 +70,8 @@ export function NodeCaseStudyTeaser({ node, ...props }: NodeCaseStudyTeaserProps
                             <Button
                                 href={node.path.alias}
                                 aria-label={`Read case study: ${node.title}`}
+                                className=""  // Add your class name
+                                invert={false}
                             >
                                 Read case study
                             </Button>

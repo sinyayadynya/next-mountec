@@ -1,3 +1,5 @@
+// ./lib/drupal.ts
+
 import { DrupalClient } from "next-drupal"
 
 export const drupal = new DrupalClient(
@@ -6,8 +8,8 @@ export const drupal = new DrupalClient(
         frontPage: "/home",
         previewSecret: process.env.DRUPAL_PREVIEW_SECRET,
         auth: {
-            clientId: process.env.DRUPAL_CLIENT_ID,
-            clientSecret: process.env.DRUPAL_CLIENT_SECRET,
+            clientId: 'IAq501Oh4fDXo9H1zYDJeAHkGSHoDmWJKh2Lr2doaXo',
+            clientSecret: '0IsYeKTo1gk_kWUchOn2zN-g_LQluxvjr8b1RLUVNAI',
         },
         forceIframeSameSiteCookie: process.env.NODE_ENV === "development",
     }

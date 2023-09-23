@@ -196,6 +196,7 @@ export default function IndexPage({ nodes, homeContent }: IndexPageProps) {
 
         <div>
             <SectionIntro
+                eyebrow
                 title={homeContent.alternative_headline}
                 className="mt-24 sm:mt-32 lg:mt-40"
             >
@@ -257,8 +258,8 @@ export async function getStaticProps(
     return {
       props: {
         nodes,
-        homeContent,
-      },
+        homeContent: homeContent as DrupalNode,
+    },
       revalidate: 60, // revalidate every 60 seconds
     }
 }

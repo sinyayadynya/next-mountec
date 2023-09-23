@@ -1,8 +1,5 @@
 import Link from 'next/link'
 import clsx from 'clsx'
-import { FormattedText } from 'components/formatted-text';
-import { absoluteUrl } from 'lib/absolute-url';
-import { formatDate } from 'lib/format-date';
 
 import { Border } from 'components/Border'
 import { Container } from 'components/Container'
@@ -11,7 +8,7 @@ import { GridPattern } from 'components/GridPattern'
 import { SectionIntro } from 'components/SectionIntro'
 // import { formatDate } from 'lib/formatDate'
 
-function ArrowIcon(props) {
+function ArrowIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg viewBox="0 0 24 6" aria-hidden="true" {...props}>
       <path
@@ -23,7 +20,21 @@ function ArrowIcon(props) {
   )
 }
 
-function PageLink({ page }) {
+interface SectionIntro {
+    title: string;
+    eyebrow?: string; // Make it optional
+    smaller?: boolean;
+    // ... other props
+}
+
+interface Page {
+  href: string
+  date: string
+  title: string
+  description: string
+}
+
+function PageLink({ page }: { page: Page }) {
   return (
     <article key={page.href}>
       <Border
@@ -33,20 +44,15 @@ function PageLink({ page }) {
         <h3 className="mt-6 text-base font-semibold text-neutral-950">
           {page.title}
         </h3>
-        <time
-          dateTime={page.created}
+        {/* <time
+          dateTime={page.date}
           className="order-first text-sm text-neutral-600"
         >
-          {formatDate(page.created)}
-        </time>
-        {page.description?.processed && (
-            <p
-            className="mt-2.5 text-base text-neutral-600"
-            dangerouslySetInnerHTML={{ __html: page.description.processed }}
-          />
-        )}
+          {formatDate(page.date)}
+        </time> */}
+        <p className="mt-2.5 text-base text-neutral-600">{page.description}</p>
         <Link
-          href={page.path.alias}
+          href={page.href}
           className="mt-6 flex gap-x-3 text-base font-semibold text-neutral-950 transition hover:text-neutral-700"
           aria-label={`Read more: ${page.title}`}
         >
@@ -59,8 +65,18 @@ function PageLink({ page }) {
   )
 }
 
-export function PageLinks({ title, intro, pages, className }) {
-    return (
+export function PageLinks({
+  title,
+  pages,
+  intro,
+  className,
+}: {
+  title: string
+  pages: Array<Page>
+  intro?: string
+  className?: string
+}) {
+  return (
     <div className={clsx('relative pt-24 sm:pt-32 lg:pt-40', className)}>
       <div className="absolute inset-x-0 top-0 -z-10 h-[884px] overflow-hidden rounded-t-4xl bg-gradient-to-b from-neutral-50">
         <GridPattern
@@ -69,21 +85,18 @@ export function PageLinks({ title, intro, pages, className }) {
         />
       </div>
 
-      <SectionIntro title={title} smaller>
+      <SectionIntro title={title} eyebrow smaller>
         {intro && <p>{intro}</p>}
       </SectionIntro>
 
       <Container className={intro ? 'mt-24' : 'mt-16'}>
-
-        <div className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
-        {/* <FadeInStagger className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2"> */}
-            {pages.map((page) => (
-                <FadeIn key={page.id}>
-                    <PageLink page={page} />
-                </FadeIn>
-            ))}
-        {/* </FadeInStagger> */}
-        </div>
+        <FadeInStagger className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
+          {pages.map((page) => (
+            <FadeIn key={page.href}>
+              <PageLink page={page} />
+            </FadeIn>
+          ))}
+        </FadeInStagger>
       </Container>
     </div>
   )

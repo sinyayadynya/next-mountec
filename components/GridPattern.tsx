@@ -3,7 +3,14 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
-function Block({ x, y, ...props }) {
+function Block({
+  x,
+  y,
+  ...props
+}: Omit<React.ComponentPropsWithoutRef<typeof motion.path>, 'x' | 'y'> & {
+  x: number
+  y: number
+}) {
   return (
     <motion.path
       transform={`translate(${-32 * y + 96 * x} ${160 * y})`}
@@ -13,12 +20,21 @@ function Block({ x, y, ...props }) {
   )
 }
 
-export function GridPattern({ yOffset = 0, interactive = false, ...props }) {
+export function GridPattern({
+  yOffset = 0,
+  interactive = false,
+  ...props
+}: React.ComponentPropsWithoutRef<'svg'> & {
+  yOffset?: number
+  interactive?: boolean
+}) {
   let id = useId()
-  let ref = useRef()
-  let currentBlock = useRef()
+  let ref = useRef<React.ElementRef<'svg'>>(null)
+  let currentBlock = useRef<[x: number, y: number]>()
   let counter = useRef(0)
-  let [hoveredBlocks, setHoveredBlocks] = useState([])
+  let [hoveredBlocks, setHoveredBlocks] = useState<
+    Array<[x: number, y: number, key: number]>
+  >([])
   let staticBlocks = [
     [1, 1],
     [2, 2],
@@ -33,7 +49,7 @@ export function GridPattern({ yOffset = 0, interactive = false, ...props }) {
       return
     }
 
-    function onMouseMove(event) {
+    function onMouseMove(event: MouseEvent) {
       if (!ref.current) {
         return
       }
@@ -59,8 +75,9 @@ export function GridPattern({ yOffset = 0, interactive = false, ...props }) {
 
       setHoveredBlocks((blocks) => {
         let key = counter.current++
-        return [...blocks, [x, y, key]].filter(
-          (block) => !(block[0] === x && block[1] === y && block[2] !== key)
+        let block = [x, y, key] as (typeof hoveredBlocks)[number]
+        return [...blocks, block].filter(
+          (block) => !(block[0] === x && block[1] === y && block[2] !== key),
         )
       })
     }
@@ -88,7 +105,7 @@ export function GridPattern({ yOffset = 0, interactive = false, ...props }) {
             transition={{ duration: 1, times: [0, 0, 1] }}
             onAnimationComplete={() => {
               setHoveredBlocks((blocks) =>
-                blocks.filter((b) => b[2] !== block[2])
+                blocks.filter((b) => b[2] !== block[2]),
               )
             }}
           />

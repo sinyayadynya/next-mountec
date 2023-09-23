@@ -86,6 +86,7 @@ export function NodeArticleTeaser({ node, ...props }: NodeArticleTeaserProps) {
                             href={node.path.alias}
                             aria-label={`Read more: ${node.title}`}
                             className="mt-8"
+                            invert={false}  // or true, depending on your needs
                         >
                             Read more
                         </Button>

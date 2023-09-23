@@ -68,7 +68,9 @@ const clients = [
 
 
 interface IndexPageProps {
-  nodes: DrupalNode[]
+    nodes?: DrupalNode[]; // Make it optional by adding '?'
+    pageNode: any; // Add this line
+  caseStudyNodes: DrupalNode[]; // Add this line
 }
 
 export default function workPage({ pageNode, caseStudyNodes }) {
@@ -116,8 +118,10 @@ export default function workPage({ pageNode, caseStudyNodes }) {
         <Testimonial
             className="mt-24 sm:mt-32 lg:mt-40"
             client={{ name: 'Mail Smirk', logo: logoMailSmirk }}
+            imageWidth={40} // Add this line
+            imageHeight={40} // Add this line
         >
-            We approached <em>Studio</em> because we loved their past work. They
+            We approached <em>Mountec Corp.</em> because we loved their past work. They
             delivered something remarkably similar in record time.
         </Testimonial>
 

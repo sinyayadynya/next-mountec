@@ -55,8 +55,8 @@ interface NodePageProps {
 
 export function Node({ resource }: NodePageProps) {
   switch (resource.type) {
-    case "node--about_page":
-      return <NodeAboutPage node={resource} />;
+    // case "node--about_page":
+    //     return <NodeAboutPage node={resource} data={{}} />;
 
     case "node--article":
       return <NodeArticle node={resource} />;
@@ -71,7 +71,7 @@ export function Node({ resource }: NodePageProps) {
       return <NodeEvent node={resource} />;
 
     case "node--how_to":
-        return <NodeHowTo node={resource} />;
+        return <NodeHowTo node={resource} howToData={resource} />;
 
     case "node--organization":
       return <NodeOrganization node={resource} />;

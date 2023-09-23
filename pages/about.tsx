@@ -34,7 +34,7 @@ export default function AboutPage({ node, data }) {
     )
 }
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<{ node: DrupalNode }>> {
+export async function getStaticProps(): Promise<GetStaticPropsResult<{ node: DrupalNode, data: any }>> {
     const aboutPageUUID = 'b10c91fe-b5b2-423d-8e09-1da19a96ffc0'; // replace with your UUID
 
     // Fetch the data for the 'about_page'
